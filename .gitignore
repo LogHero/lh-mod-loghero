@@ -1,0 +1,6 @@
+*.user
+*.la
+*.lo
+*.slo
+*.o
+.libs/
