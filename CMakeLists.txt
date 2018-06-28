@@ -11,5 +11,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_executable(hello main.cpp)
-install(TARGETS hello DESTINATION bin)
+add_subdirectory(sdk)
