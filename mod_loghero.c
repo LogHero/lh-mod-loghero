@@ -18,9 +18,13 @@
 #include "http_log.h"
 #include "http_protocol.h"
 #include "http_request.h"
+#include "LibLogHero.h"
 
 
 static int loghero_handler(request_rec *r) {
+    struct LogEvent logEvent;
+    logEvent.pagePath = r->uri;
+    submitLogEvent(&logEvent);
     ap_log_rerror(APLOG_MARK, APLOG_ALERT, 0, r, APLOGNO(00644) "My loghero handler was called!!! %s %i", r->uri, r->status);
     return DECLINED;
 }
