@@ -1,10 +1,7 @@
 #include "LibLogHero.h"
+#include <iostream>
 
 
-struct LogEvent {
-    char *pagePath;
-};
-
-void submitLogEvent(LogEvent *logEvent) {
-
+void submitLogEvent(struct LogEvent *logEvent) {
+    std::cout << " ** Lib function was called ** " << std::endl;
 }
