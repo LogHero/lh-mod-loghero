@@ -8,3 +8,5 @@ install(
     TARGETS loghero
     DESTINATION lib
 )
+
+add_subdirectory(test)

@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 3.11)
 project (lh-mod-loghero)
+
+include(conanbuildinfo.cmake)
+conan_set_find_paths()
+enable_testing()
 
 set(APXS_OPTIONS -i -a)
 set(APXS_SUDO sudo)
