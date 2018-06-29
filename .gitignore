@@ -4,3 +4,7 @@
 *.slo
 *.o
 .libs/
+
+conanbuildinfo.cmake
+conanbuildinfo.txt
+conaninfo.txt
