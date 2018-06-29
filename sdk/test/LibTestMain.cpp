@@ -1,10 +1,7 @@
 #include "gtest/gtest.h"
-#include <string>
 
-namespace {
-  TEST(FactorialTest, HandlesZeroInput) {
-    ASSERT_TRUE(true);
-  }
+TEST(FactorialTest, HandlesZeroInput) {
+  ASSERT_TRUE(true);
 }
 
 int main(int argc, char **argv) {
