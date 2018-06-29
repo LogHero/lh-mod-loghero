@@ -22,6 +22,9 @@
 
 
 static int loghero_handler(request_rec *r) {
+    struct LogEvent logEvent;
+    logEvent.pagePath = r->uri;
+    submitLogEvent(&logEvent);
     ap_log_rerror(APLOG_MARK, APLOG_ALERT, 0, r, APLOGNO(00644) "My loghero handler was called!!! %s %i", r->uri, r->status);
     return DECLINED;
 }
@@ -29,9 +32,6 @@ static int loghero_handler(request_rec *r) {
 
 static void loghero_register_hooks(apr_pool_t *pool) {
     printf("\n ** loghero_register_hooks **\n\n");
-    struct LogEvent logEvent;
-    logEvent.pagePath = "/my/page/path";
-    submitLogEvent(&logEvent);
     ap_hook_log_transaction(loghero_handler, NULL, NULL, APR_HOOK_MIDDLE);
 }
 
