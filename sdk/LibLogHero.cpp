@@ -1,9 +1,16 @@
 #include "LibLogHero.h"
+#include "LogEvent.h"
 #include <iostream>
 #include <string>
 
 
-void submitLogEvent(struct LogEvent *logEvent) {
-    std::string pagePath(logEvent->pagePath);
-    std::cout << " ** Lib function was called with page path " << pagePath << std::endl;
+void submitLogEvent(struct LogEvent *pLogEvent) {
+  const loghero::LogEvent logEvent(*pLogEvent);
+  std::cout << " ** Lib function was called with "
+            << logEvent.getLandingPagePath() << "; "
+            << logEvent.getIpAddress() << "; "
+            << logEvent.getUserAgent() << "; "
+            << logEvent.getHostname() << "; "
+            << logEvent.getTimestamp() << "; "
+            << std::endl;
 }
