@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 project (lh-mod-loghero)
 
-set( GCC_CC_FLAGS "-g -Wall -Wno-unused-local-typedefs" )
+set( GCC_CC_FLAGS "-g -Wall -Wno-unused-local-typedefs -fPIC" )
 
 include(conanbuildinfo.cmake)
 conan_set_find_paths()
