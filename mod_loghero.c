@@ -30,7 +30,7 @@ static int loghero_handler(request_rec *r) {
   logEvent.hostname = r->hostname;
   logEvent.ipAddress = r->connection->client_ip;
   logEvent.userAgent = apr_table_get(r->headers_in, "user-agent");
-  logEvent.timestamp = r->request_time;
+  logEvent.timestamp = r->request_time / 1000000; // httpd request_time is number of microseconds since 00:00:00 January 1, 1970 UTC
   submitLogEvent(&logEvent);
   ap_log_rerror(APLOG_MARK, APLOG_ALERT, 0, r, APLOGNO(00644) "My loghero handler was called!!! %s %i", r->uri, r->status);
   return DECLINED;

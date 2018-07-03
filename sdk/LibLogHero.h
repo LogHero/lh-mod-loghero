@@ -10,7 +10,7 @@ extern "C" {
     const char *userAgent;
     const char *ipAddress;
     const char *hostname;
-    int timestamp;
+    long timestamp;
   };
 
   void submitLogEvent(struct LogEvent *logEvent);

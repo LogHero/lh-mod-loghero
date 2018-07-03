@@ -11,6 +11,6 @@ void submitLogEvent(struct LogEvent *pLogEvent) {
             << logEvent.getIpAddress() << "; "
             << logEvent.getUserAgent() << "; "
             << logEvent.getHostname() << "; "
-            << logEvent.getTimestamp() << "; "
+            << logEvent.getTimestampAsString() << "; "
             << std::endl;
 }
