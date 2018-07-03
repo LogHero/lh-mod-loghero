@@ -2,8 +2,10 @@
 #define LOGEVENT_H
 
 #include "LibLogHero.h"
-#include "GlobalDefines.h"
+
 #include <string>
+
+#include "GlobalDefines.h"
 
 namespace loghero {
   class LogEvent {

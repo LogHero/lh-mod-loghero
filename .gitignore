@@ -3,6 +3,7 @@
 *.lo
 *.slo
 *.o
+*.autosave
 .libs/
 
 conanbuildinfo.cmake

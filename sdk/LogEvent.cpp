@@ -5,6 +5,7 @@
 #include <ctime>
 
 namespace loghero {
+
   LogEvent::LogEvent(const ::LogEvent &cLogEvent)
     : landingPagePath(cLogEvent.landingPagePath),
       ipAddress(cLogEvent.ipAddress),

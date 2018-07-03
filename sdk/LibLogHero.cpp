@@ -1,7 +1,9 @@
 #include "LibLogHero.h"
-#include "LogEvent.h"
-#include <iostream>
+
 #include <string>
+#include <iostream>
+
+#include "LogEvent.h"
 
 
 void submitLogEvent(struct LogEvent *pLogEvent) {
