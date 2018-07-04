@@ -8,8 +8,11 @@ include_directories(
 add_executable(
     test_loghero_lib
     LibTestMain.cpp
+    LibTestSamples.h
     LogEventTest.h
     LogEventTest.cpp
+    LogEventSerializerJsonTest.h
+    LogEventSerializerJsonTest.cpp
 )
 
 target_link_libraries(

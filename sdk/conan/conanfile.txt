@@ -1,9 +1,11 @@
 [requires]
 boost/1.66.0@conan/stable
 gtest/1.8.0@bincrafters/stable
+jsoncpp/1.8.4@theirix/stable
 
 [generators]
 cmake
 
 [options]
 boost:fPIC=True
+jsoncpp:use_pic=True

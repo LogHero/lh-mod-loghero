@@ -8,7 +8,7 @@
 namespace loghero {
 namespace testing {
 
-  class LogEventTest: public ::testing::Test {
+  class LogEventTest : public ::testing::Test {
     public:
 
       LogEventTest();

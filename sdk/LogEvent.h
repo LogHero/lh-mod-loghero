@@ -4,13 +4,16 @@
 #include "LibLogHero.h"
 
 #include <string>
+#include <vector>
 
 #include "GlobalDefines.h"
 
 namespace loghero {
   class LogEvent {
-
     public:
+
+      typedef std::vector<LogEvent> List;
+
       LogEvent(const ::LogEvent &cLogEvent);
 
       const inline std::string& getLandingPagePath() const {

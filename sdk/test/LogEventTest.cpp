@@ -1,18 +1,14 @@
 #include "LogEventTest.h"
+#include "LibTestSamples.h"
 
 namespace loghero {
 namespace testing {
 
-  LogEventTest::LogEventTest() {
-    this->cLogEvent.hostname = "www.loghero.io";
-    this->cLogEvent.landingPagePath = "/landing/page/path";
-    this->cLogEvent.ipAddress = "123.45.67.89";
-    this->cLogEvent.timestamp = 1530695457;
-    this->cLogEvent.userAgent = "Google Bot";
+  LogEventTest::LogEventTest() :
+  cLogEvent(createCLogEventSample()) {
   }
 
   LogEventTest::~LogEventTest() {
-
   }
 
   TEST_F(LogEventTest, InitializeFromLogHeroCStruct) {
