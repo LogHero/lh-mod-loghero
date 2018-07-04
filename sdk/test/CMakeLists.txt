@@ -8,12 +8,15 @@ include_directories(
 add_executable(
     test_loghero_lib
     LibTestMain.cpp
+    LogEventTest.h
+    LogEventTest.cpp
 )
 
 target_link_libraries(
     test_loghero_lib
     ${GTEST_LIBRARIES}
     pthread
+    loghero
 )
 
 add_test(

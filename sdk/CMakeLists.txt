@@ -1,4 +1,6 @@
-
+include_directories(
+    .
+)
 
 add_library(loghero SHARED
     LibLogHero.h
