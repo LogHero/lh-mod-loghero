@@ -20,6 +20,7 @@ namespace loghero {
 
   std::string LogEvent::convertUnixTimestampToString(time_t timestamp)
   {
+    // TODO: Use http://php.net/manual/de/function.strftime.php
     char mbstr[100];
     if (std::strftime(mbstr, 100, "%FT%T%z", std::localtime(&timestamp))) {
         return std::string(mbstr);

@@ -17,13 +17,16 @@ namespace testing {
   }
 
   TEST_F(LogEventSerializerJsonTest, SerializeLogEventList) {
-    std::string jsonExpected = "{\"columns\":[\"hostname\",\"landingPage\",\"timesamp\",\"ua\"]}";
+    std::string jsonExpected = "{"
+                                 "\"columns\":[\"hostname\",\"landingPage\",\"timesamp\",\"ua\"],"
+                                 "\"rows\":["
+                                   "[\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
+                                   "[\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
+                                   "[\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"]"
+                                 "]"
+                               "}";
     std::string jsonCreated = pSerializer->serialize(this->logEvents);
     ASSERT_EQ(jsonExpected, jsonCreated);
-  }
-
-  // TODO
-  TEST_F(LogEventSerializerJsonTest, SerializeEmptyLogEventList) {
   }
 
 }
