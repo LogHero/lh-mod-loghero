@@ -26,17 +26,22 @@ namespace loghero {
     struct curl_slist *pHeaderList;
   };
 
-  HttpRequestCurl::HttpRequestCurl(const std::string &url) :
+  HttpRequestCurl::HttpRequestCurl() :
   pCurlContainer(new CurlContainer()) {
-    curl_easy_setopt(this->pCurlContainer->pCurl, CURLOPT_URL, url.c_str());
-    curl_easy_setopt(this->pCurlContainer->pCurl, CURLOPT_CUSTOMREQUEST, "PUT");
   }
 
   HttpRequestCurl::~HttpRequestCurl() {
   }
 
+  void HttpRequestCurl::setUrl(const std::string &url) {
+    curl_easy_setopt(this->pCurlContainer->pCurl, CURLOPT_URL, url.c_str());
+  }
+
+  void HttpRequestCurl::setMethod(const std::string &method) {
+    curl_easy_setopt(this->pCurlContainer->pCurl, CURLOPT_CUSTOMREQUEST, method.c_str());
+  }
+
   void HttpRequestCurl::setData(const std::string &data) {
-    std::cout << "HttpRequestCurl::setData() DATA LENGTH: " << data.size() << std::endl;
     curl_easy_setopt(this->pCurlContainer->pCurl, CURLOPT_POSTFIELDSIZE, data.size());
     curl_easy_setopt(this->pCurlContainer->pCurl, CURLOPT_POSTFIELDS, data.c_str());
   }
@@ -48,6 +53,7 @@ namespace loghero {
   void HttpRequestCurl::execute() {
     curl_easy_setopt(this->pCurlContainer->pCurl, CURLOPT_HTTPHEADER, this->pCurlContainer->pHeaderList);
     CURLcode res = curl_easy_perform(this->pCurlContainer->pCurl);
+    // TODO: Throw exception here!!
     if(res != CURLE_OK)
           fprintf(stderr, "curl_easy_perform() failed: %s\n",
                   curl_easy_strerror(res));

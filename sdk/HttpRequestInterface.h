@@ -3,6 +3,8 @@
 
 #include "GlobalDefines.h"
 
+#include <string>
+
 
 namespace loghero {
 
@@ -12,6 +14,16 @@ namespace loghero {
       DISALLOW_COPY_AND_ASSIGN(HttpRequestInterface);
       HttpRequestInterface(){}
       virtual ~HttpRequestInterface(){}
+
+      virtual void setUrl(const std::string &url) = 0;
+
+      virtual void setMethod(const std::string &method) = 0;
+
+      virtual void setData(const std::string &data) = 0;
+
+      virtual void setHeader(const std::string &header) = 0;
+
+      virtual void execute() = 0;
 
   };
 

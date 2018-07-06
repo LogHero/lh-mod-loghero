@@ -10,8 +10,12 @@ namespace loghero {
 
   class HttpRequestCurl : public HttpRequestInterface {
     public:
-      HttpRequestCurl(const std::string &url);
+      HttpRequestCurl();
       virtual ~HttpRequestCurl();
+
+      virtual void setUrl(const std::string &url);
+
+      virtual void setMethod(const std::string &method);
 
       virtual void setData(const std::string &data);
 

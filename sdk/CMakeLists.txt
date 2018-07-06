@@ -30,7 +30,6 @@ add_library(loghero SHARED
     LogEventSerializerJson.cpp
     APIAccessInterface.h
     APIAccess.h
-    APIAccess.cpp
     Zlib.h
     Zlib.cpp
     HttpRequestInterface.h
