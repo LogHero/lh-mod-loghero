@@ -2,33 +2,35 @@
 #define APIACCESS_H
 
 #include "LogHeroSettings.h"
+#include "LogEvent.h"
 #include "Zlib.h"
 
 
 namespace loghero {
 
-  template <class HttpRequestT>
+  template <class HttpRequestT, class SerializerT>
   class APIAccess {
     public:
       APIAccess(const LogHeroSettings &settings);
       virtual ~APIAccess(){}
 
-      void submitLogPackage(const std::string &payloadAsJson) const;
+      void submitLogPackage(const LogEvent::List &logEvents) const;
 
     private:
       const LogHeroSettings settings;
       const std::string userAgent;
+      const SerializerT serializer;
 
   };
 
-  template <class HttpRequestT>
-  APIAccess<HttpRequestT>::APIAccess(const LogHeroSettings &settings):
+  template <class HttpRequestT, class SerializerT>
+  APIAccess<HttpRequestT, SerializerT>::APIAccess(const LogHeroSettings &settings):
     settings(settings),
     userAgent(settings.clientId + "; C++ SDK loghero/sdk@0.0.1") {
   }
 
-  template <class HttpRequestT>
-  void APIAccess<HttpRequestT>::submitLogPackage(const std::string &payloadAsJson) const {
+  template <class HttpRequestT, class SerializerT>
+  void APIAccess<HttpRequestT, SerializerT>::submitLogPackage(const LogEvent::List &logEvents) const {
     HttpRequestT request;
     request.setMethod("PUT");
     request.setUrl(this->settings.apiEndpoint);
@@ -36,6 +38,7 @@ namespace loghero {
     request.setHeader("Authorization: " + this->settings.apiKey);
     request.setHeader("User-Agent: " + this->userAgent);
     request.setHeader("Content-encoding: deflate");
+    const std::string payloadAsJson = this->serializer.serialize(logEvents);
     request.setData(Zlib::deflate(payloadAsJson));
     request.execute();
   }
