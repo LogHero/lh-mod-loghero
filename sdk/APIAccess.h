@@ -14,7 +14,7 @@ namespace loghero {
       APIAccess(const LogHeroSettings &settings);
       virtual ~APIAccess(){}
 
-      void submitLogPackage(const LogEvent::List &logEvents) const;
+      void submitLogEvents(const LogEvent::List &logEvents) const;
 
     private:
       const LogHeroSettings settings;
@@ -30,7 +30,7 @@ namespace loghero {
   }
 
   template <class HttpRequestT, class SerializerT>
-  void APIAccess<HttpRequestT, SerializerT>::submitLogPackage(const LogEvent::List &logEvents) const {
+  void APIAccess<HttpRequestT, SerializerT>::submitLogEvents(const LogEvent::List &logEvents) const {
     HttpRequestT request;
     request.setMethod("PUT");
     request.setUrl(this->settings.apiEndpoint);

@@ -35,7 +35,7 @@ namespace testing {
     EXPECT_CALL(httpRequestMock, execute());
     FakeHttpRequest::resetRequestMock(&httpRequestMock);
     APIAccess<FakeHttpRequest, LogEventSerializerJson> apiAccess(this->logHeroSettings);
-    apiAccess.submitLogPackage(logEvents);
+    apiAccess.submitLogEvents(logEvents);
   }
 
 }
