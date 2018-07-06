@@ -28,6 +28,10 @@ namespace loghero {
         return this->userAgent;
       }
 
+      const inline std::string& getCid() const {
+        return this->cid;
+      }
+
       const inline std::string& getHostname() const {
         return this->hostname;
       }
@@ -44,12 +48,17 @@ namespace loghero {
 
       static std::string convertUnixTimestampToString(time_t timestamp);
 
+      static std::string createCidFromIpAndUserAgent(const std::string &ipAddress, const std::string &userAgent);
+
+      static std::string md5Digest(const std::string &input);
+
       const std::string landingPagePath;
       const std::string ipAddress;
       const std::string userAgent;
       const std::string hostname;
       const time_t timestamp;
       const std::string timestampAsString;
+      const std::string cid;
 
   };
 }

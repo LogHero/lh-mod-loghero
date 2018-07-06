@@ -12,6 +12,7 @@ include_directories(
     ${JsonCpp_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIRS}
     ${CURL_INCLUDE_DIRS}
+    ${OPENSSL_INCLUDE_DIR}
 )
 
 link_directories(

@@ -25,5 +25,10 @@ namespace testing {
     EXPECT_EQ("2018-07-04T11:10:57+0200", logEvent.getTimestampAsString());
   }
 
+  TEST_F(LogEventTest, GenerateCidFromMd5HashOfIpAndUserAgent) {
+    const LogEvent logEvent(this->cLogEvent);
+    EXPECT_EQ("e254fc99d969b359dbb498b8ab8e5ee5", logEvent.getCid());
+  }
+
 }
 }

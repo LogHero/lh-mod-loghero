@@ -22,8 +22,8 @@ namespace loghero {
     Json::Value root;
     root["columns"] = *this->pColumnsValue;
     Json::Value rows;
-    for (LogEvent::List::const_iterator it = logEventList.begin(); it != logEventList.end(); ++it) {
-      rows.append(LogEventSerializerJson::createRowValue(*it));
+    for (LogEvent logEvent: logEventList) {
+      rows.append(LogEventSerializerJson::createRowValue(logEvent));
     }
     root["rows"] = rows;
     std::stringstream strs;
