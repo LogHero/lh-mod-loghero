@@ -4,15 +4,16 @@
 #include <iostream>
 
 #include "LogEvent.h"
+#include "LogEventSerializerJson.h"
+#include "APIAccess.h"
 
 
 void submitLogEvent(struct LogEvent *pLogEvent) {
-  const loghero::LogEvent logEvent(*pLogEvent);
-  std::cout << " ** Lib function was called with "
-            << logEvent.getLandingPagePath() << "; "
-            << logEvent.getIpAddress() << "; "
-            << logEvent.getUserAgent() << "; "
-            << logEvent.getHostname() << "; "
-            << logEvent.getTimestampAsString() << "; "
-            << std::endl;
+  loghero::LogEvent::List logEventList;
+  logEventList.push_back(loghero::LogEvent(*pLogEvent));
+  loghero::LogEventSerializerJson serializer;
+  const std::string payloadAsJson = serializer.serialize(logEventList);
+  std::cout << payloadAsJson << std::endl;
+  loghero::APIAccess apiAccess;
+  apiAccess.submitLogPackage(payloadAsJson);
 }

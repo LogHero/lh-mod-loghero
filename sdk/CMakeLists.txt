@@ -1,10 +1,13 @@
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 find_package(JsonCpp)
+find_package(Boost COMPONENTS system iostreams REQUIRED)
+find_package(ZLIB)
 
 include_directories(
     .
     ${JsonCpp_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -20,11 +23,18 @@ add_library(loghero SHARED
     LogEventSerializerInterface.h
     LogEventSerializerJson.h
     LogEventSerializerJson.cpp
+    APIAccessInterface.h
+    APIAccess.h
+    APIAccess.cpp
+    Zlib.h
+    Zlib.cpp
 )
 
 target_link_libraries(
     loghero
     ${JsonCpp_LIBRARIES}
+    ${Boost_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
 
 install(
