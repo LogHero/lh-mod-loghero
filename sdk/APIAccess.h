@@ -1,7 +1,6 @@
 #ifndef APIACCESS_H
 #define APIACCESS_H
 
-#include "APIAccessInterface.h"
 #include "LogHeroSettings.h"
 #include "Zlib.h"
 
@@ -9,12 +8,12 @@
 namespace loghero {
 
   template <class HttpRequestT>
-  class APIAccess : public APIAccessInterface {
+  class APIAccess {
     public:
       APIAccess(const LogHeroSettings &settings);
       virtual ~APIAccess(){}
 
-      virtual void submitLogPackage(const std::string &payloadAsJson) const;
+      void submitLogPackage(const std::string &payloadAsJson) const;
 
     private:
       const LogHeroSettings settings;

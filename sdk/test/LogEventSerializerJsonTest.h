@@ -3,7 +3,7 @@
 
 #include "LibLogHero.h"
 #include "LogEvent.h"
-#include "LogEventSerializerInterface.h"
+#include "LogEventSerializerJson.h"
 #include "gtest/gtest.h"
 
 #include <memory>
@@ -19,7 +19,7 @@ namespace testing {
       virtual ~LogEventSerializerJsonTest();
 
       LogEvent::List logEvents;
-      std::unique_ptr<LogEventSerializerInterface> pSerializer;
+      LogEventSerializerJson serializer;
 
   };
 

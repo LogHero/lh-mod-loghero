@@ -1,8 +1,8 @@
 #ifndef LOGEVENTSERIALIZERJSON_H
 #define LOGEVENTSERIALIZERJSON_H
 
+#include "LogEvent.h"
 #include "GlobalDefines.h"
-#include "LogEventSerializerInterface.h"
 
 #include <memory>
 
@@ -14,13 +14,13 @@ namespace Json {
 
 namespace loghero {
 
-  class LogEventSerializerJson : public LogEventSerializerInterface {
+  class LogEventSerializerJson {
     public:
 
       LogEventSerializerJson();
       virtual ~LogEventSerializerJson();
 
-      virtual std::string serialize(const LogEvent::List &logEventList) const;
+      std::string serialize(const LogEvent::List &logEventList) const;
 
     private:
 

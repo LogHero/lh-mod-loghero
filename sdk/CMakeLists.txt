@@ -26,10 +26,8 @@ add_library(loghero SHARED
     LogHeroSettings.h
     LogEvent.h
     LogEvent.cpp
-    LogEventSerializerInterface.h
     LogEventSerializerJson.h
     LogEventSerializerJson.cpp
-    APIAccessInterface.h
     APIAccess.h
     Zlib.h
     Zlib.cpp
