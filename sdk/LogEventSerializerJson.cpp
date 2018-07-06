@@ -9,6 +9,7 @@ namespace loghero {
   LogEventSerializerJson::LogEventSerializerJson() :
   pColumnsValue(new Json::Value),
   pStreamWriter(std::move(LogEventSerializerJson::createStreamWriter())) {
+    this->pColumnsValue->append("cid");
     this->pColumnsValue->append("hostname");
     this->pColumnsValue->append("landingPage");
     this->pColumnsValue->append("timesamp");
@@ -33,6 +34,7 @@ namespace loghero {
 
   Json::Value LogEventSerializerJson::createRowValue(const LogEvent &logEvent) const {
     Json::Value row;
+    row.append(logEvent.getCid());
     row.append(logEvent.getHostname());
     row.append(logEvent.getLandingPagePath());
     row.append(logEvent.getTimestampAsString());

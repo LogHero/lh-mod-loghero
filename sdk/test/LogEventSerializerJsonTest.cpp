@@ -18,11 +18,11 @@ namespace testing {
 
   TEST_F(LogEventSerializerJsonTest, SerializeLogEventList) {
     std::string jsonExpected = "{"
-                                 "\"columns\":[\"hostname\",\"landingPage\",\"timesamp\",\"ua\"],"
+                                 "\"columns\":[\"cid\",\"hostname\",\"landingPage\",\"timesamp\",\"ua\"],"
                                  "\"rows\":["
-                                   "[\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
-                                   "[\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
-                                   "[\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"]"
+                                   "[\"e254fc99d969b359dbb498b8ab8e5ee5\",\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
+                                   "[\"e254fc99d969b359dbb498b8ab8e5ee5\",\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
+                                   "[\"e254fc99d969b359dbb498b8ab8e5ee5\",\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"]"
                                  "]"
                                "}";
     std::string jsonCreated = pSerializer->serialize(this->logEvents);
