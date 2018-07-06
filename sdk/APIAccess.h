@@ -2,6 +2,7 @@
 #define APIACCESS_H
 
 #include "APIAccessInterface.h"
+#include "LogHeroSettings.h"
 #include "Zlib.h"
 
 
@@ -10,21 +11,31 @@ namespace loghero {
   template <class HttpRequestT>
   class APIAccess : public APIAccessInterface {
     public:
-      APIAccess(){}
+      APIAccess(const LogHeroSettings &settings);
       virtual ~APIAccess(){}
 
       virtual void submitLogPackage(const std::string &payloadAsJson) const;
 
+    private:
+      const LogHeroSettings settings;
+      const std::string userAgent;
+
   };
+
+  template <class HttpRequestT>
+  APIAccess<HttpRequestT>::APIAccess(const LogHeroSettings &settings):
+    settings(settings),
+    userAgent(settings.clientId + "; C++ SDK loghero/sdk@0.0.1") {
+  }
 
   template <class HttpRequestT>
   void APIAccess<HttpRequestT>::submitLogPackage(const std::string &payloadAsJson) const {
     HttpRequestT request;
     request.setMethod("PUT");
-    request.setUrl("https://test.loghero.io/logs/");
+    request.setUrl(this->settings.apiEndpoint);
     request.setHeader("Content-type: application/json");
-    request.setHeader("Authorization: YOUR_API_KEY");
-    request.setHeader("User-Agent: C++ SDK Prototype");
+    request.setHeader("Authorization: " + this->settings.apiKey);
+    request.setHeader("User-Agent: " + this->userAgent);
     request.setHeader("Content-encoding: deflate");
     request.setData(Zlib::deflate(payloadAsJson));
     request.execute();

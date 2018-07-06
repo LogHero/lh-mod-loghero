@@ -23,6 +23,7 @@ add_library(loghero SHARED
     LibLogHero.h
     LibLogHero.cpp
     GlobalDefines.h
+    LogHeroSettings.h
     LogEvent.h
     LogEvent.cpp
     LogEventSerializerInterface.h

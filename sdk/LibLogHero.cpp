@@ -15,6 +15,7 @@ void submitLogEvent(struct LogEvent *pLogEvent) {
   loghero::LogEventSerializerJson serializer;
   const std::string payloadAsJson = serializer.serialize(logEventList);
   std::cout << payloadAsJson << std::endl;
-  loghero::APIAccess<loghero::HttpRequestCurl> apiAccess;
+  loghero::LogHeroSettings settings("YOUR_API_KEY", "Apache Module loghero/httpd@0.0.1");
+  loghero::APIAccess<loghero::HttpRequestCurl> apiAccess(settings);
   apiAccess.submitLogPackage(payloadAsJson);
 }

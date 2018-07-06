@@ -1,6 +1,7 @@
 #ifndef APIACCESSTEST_H
 #define APIACCESSTEST_H
 
+#include "LogHeroSettings.h"
 
 #include "gtest/gtest.h"
 
@@ -12,6 +13,8 @@ namespace testing {
 
       APIAccessTest();
       virtual ~APIAccessTest();
+
+      LogHeroSettings logHeroSettings;
 
   };
 
