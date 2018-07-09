@@ -16,12 +16,19 @@ namespace testing {
   }
 
   TEST_F(LogEventSerializerJsonTest, SerializeLogEventList) {
-    std::string jsonExpected = "{"
+    const std::string rowJsonExpected = "["
+                                          "\"e254fc99d969b359dbb498b8ab8e5ee5\","
+                                          "\"www.loghero.io\","
+                                          "\"/landing/page/path\","
+                                          "\"2018-07-04T11:10:57+0200\","
+                                          "\"Google Bot\""
+                                        "]";
+    const std::string jsonExpected = "{"
                                  "\"columns\":[\"cid\",\"hostname\",\"landingPage\",\"timesamp\",\"ua\"],"
                                  "\"rows\":["
-                                   "[\"e254fc99d969b359dbb498b8ab8e5ee5\",\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
-                                   "[\"e254fc99d969b359dbb498b8ab8e5ee5\",\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"],"
-                                   "[\"e254fc99d969b359dbb498b8ab8e5ee5\",\"www.loghero.io\",\"/landing/page/path\",\"2018-07-04T11:10:57+0200\",\"Google Bot\"]"
+                                   + rowJsonExpected + ","
+                                   + rowJsonExpected + ","
+                                   + rowJsonExpected +
                                  "]"
                                "}";
     std::string jsonCreated = serializer.serialize(this->logEvents);
