@@ -3,10 +3,4 @@
 
 namespace loghero {
 
-  LogHeroSession::LogHeroSession() {
-  }
-
-  LogHeroSession::~LogHeroSession() {
-  }
-
 }

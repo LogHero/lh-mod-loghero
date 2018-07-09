@@ -16,7 +16,7 @@ namespace loghero {
     std::lock_guard<std::mutex> lock(this->mutex);
     SessionMapT::iterator it = this->apiKeySessions.find(apiKey);
     if (it == this->apiKeySessions.end()) {
-      this->resetSessionInternally(apiKey, std::unique_ptr<LogHeroSessionInterface>(new LogHeroSession()));
+      this->resetSessionInternally(apiKey, std::unique_ptr<LogHeroSessionInterface>(new LogHeroDefaultSession()));
       it = this->apiKeySessions.find(apiKey);
     }
     assert(it != this->apiKeySessions.end());

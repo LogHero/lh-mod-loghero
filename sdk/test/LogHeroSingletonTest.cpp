@@ -27,7 +27,7 @@ namespace testing {
 
   TEST_F(LogHeroSingletonTest, SetCustomSession) {
     LogHeroSessionInterface *pDefaultSession = LogHeroSingleton::Instance().session("KEY_1");
-    LogHeroSessionInterface *pCustomSession = new LogHeroSession();
+    LogHeroSessionInterface *pCustomSession = new LogHeroDefaultSession();
     LogHeroSingleton::Instance().resetSession("KEY_1", std::unique_ptr<LogHeroSessionInterface>(pCustomSession));
     LogHeroSessionInterface *pAccessedCustomSession = LogHeroSingleton::Instance().session("KEY_1");
     ASSERT_NE(pDefaultSession, pAccessedCustomSession);

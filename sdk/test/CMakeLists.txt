@@ -12,6 +12,8 @@ add_executable(
     LibTestMain.cpp
     LogHeroSingletonTest.h
     LogHeroSingletonTest.cpp
+    LogHeroSessionTest.h
+    LogHeroSessionTest.cpp
     LibTestSamples.h
     LogEventTest.h
     LogEventTest.cpp

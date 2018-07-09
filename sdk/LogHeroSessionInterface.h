@@ -1,6 +1,7 @@
 #ifndef LOGHEROSESSIONINTERFACE_H
 #define LOGHEROSESSIONINTERFACE_H
 
+#include "LogEvent.h"
 #include "GlobalDefines.h"
 
 
@@ -11,6 +12,9 @@ namespace loghero {
         DISALLOW_COPY_AND_ASSIGN(LogHeroSessionInterface);
         LogHeroSessionInterface(){}
         virtual ~LogHeroSessionInterface(){}
+
+        virtual void submitLogEvent(const LogEvent &logEvent) = 0;
+
     };
 
 }
