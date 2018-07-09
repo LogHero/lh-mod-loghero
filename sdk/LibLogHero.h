@@ -5,11 +5,15 @@
 extern "C" {
 #endif
 
-    struct LogEvent {
-        char *pagePath;
-    };
+  struct LogEvent {
+    const char *landingPagePath;
+    const char *userAgent;
+    const char *ipAddress;
+    const char *hostname;
+    long timestamp;
+  };
 
-    void submitLogEvent(struct LogEvent *logEvent);
+  void submitLogEvent(struct LogEvent *logEvent);
 
 #ifdef __cplusplus
 }

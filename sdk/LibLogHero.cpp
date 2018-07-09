@@ -1,9 +1,18 @@
 #include "LibLogHero.h"
-#include <iostream>
+
 #include <string>
+#include <iostream>
+
+#include "LogEvent.h"
+#include "LogEventSerializerJson.h"
+#include "APIAccess.h"
+#include "HttpRequestCurl.h"
 
 
-void submitLogEvent(struct LogEvent *logEvent) {
-    std::string pagePath(logEvent->pagePath);
-    std::cout << " ** Lib function was called with page path " << pagePath << std::endl;
+void submitLogEvent(struct LogEvent *pLogEvent) {
+  loghero::LogEvent::List logEventList;
+  logEventList.push_back(loghero::LogEvent(*pLogEvent));
+  loghero::LogHeroSettings settings("YOUR_API_KEY", "Apache Module loghero/httpd@0.0.1");
+  loghero::APIAccess<loghero::HttpRequestCurl, loghero::LogEventSerializerJson> apiAccess(settings);
+  apiAccess.submitLogEvents(logEventList);
 }
