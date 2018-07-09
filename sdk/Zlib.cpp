@@ -11,8 +11,7 @@ namespace loghero {
 
   std::string Zlib::deflate(const std::string &input) {
     std::stringstream compressed;
-    std::stringstream original;
-    original << input;
+    std::stringstream original(input);
     boost::iostreams::filtering_streambuf<boost::iostreams::input> out;
     out.push(boost::iostreams::zlib_compressor());
     out.push(original);
@@ -22,8 +21,7 @@ namespace loghero {
 
   std::string Zlib::inflate(const std::string &input) {
     std::stringstream decompressed;
-    std::stringstream compressed;
-    compressed << input;
+    std::stringstream compressed(input);
     boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
     in.push(boost::iostreams::zlib_decompressor());
     in.push(compressed);
