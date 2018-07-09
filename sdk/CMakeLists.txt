@@ -1,3 +1,4 @@
+set(LH_SDK_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 find_package(JsonCpp REQUIRED)
@@ -5,6 +6,7 @@ find_package(Boost COMPONENTS system iostreams REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(CURL REQUIRED)
+find_package(Loki REQUIRED)
 
 
 include_directories(
@@ -13,6 +15,7 @@ include_directories(
     ${Boost_INCLUDE_DIRS}
     ${CURL_INCLUDE_DIRS}
     ${OPENSSL_INCLUDE_DIR}
+    ${Loki_INCLUDE_DIR}
 )
 
 link_directories(
@@ -24,6 +27,11 @@ add_library(loghero SHARED
     LibLogHero.cpp
     GlobalDefines.h
     LogHeroSettings.h
+    LogHeroSingleton.h
+    LogHeroSingleton.cpp
+    LogHeroSessionInterface.h
+    LogHeroSession.h
+    LogHeroSession.cpp
     LogEvent.h
     LogEvent.cpp
     LogEventSerializerJson.h
@@ -51,4 +59,5 @@ install(
     DESTINATION lib
 )
 
+add_subdirectory(3rd)
 add_subdirectory(test)
