@@ -10,6 +10,10 @@ include_directories(
 add_executable(
     test_loghero_lib
     LibTestMain.cpp
+    LogHeroSingletonTest.h
+    LogHeroSingletonTest.cpp
+    LogHeroSessionTest.h
+    LogHeroSessionTest.cpp
     LibTestSamples.h
     LogEventTest.h
     LogEventTest.cpp

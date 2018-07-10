@@ -13,7 +13,7 @@ extern "C" {
     long timestamp;
   };
 
-  void submitLogEvent(struct LogEvent *logEvent);
+  void submitLogEvent(const char *apiKey, struct LogEvent *logEvent);
 
 #ifdef __cplusplus
 }

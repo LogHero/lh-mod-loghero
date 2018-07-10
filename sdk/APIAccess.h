@@ -26,7 +26,7 @@ namespace loghero {
   template <class HttpRequestT, class SerializerT>
   APIAccess<HttpRequestT, SerializerT>::APIAccess(const LogHeroSettings &settings):
     settings(settings),
-    userAgent(settings.clientId + "; C++ SDK loghero/sdk@0.0.1") {
+    userAgent(std::string(LH_MOD_CLIENT_ID) + "; " + std::string(LH_SDK_CLIENT_ID)) {
   }
 
   template <class HttpRequestT, class SerializerT>
@@ -38,8 +38,8 @@ namespace loghero {
     request.setHeader("Authorization: " + this->settings.apiKey);
     request.setHeader("User-Agent: " + this->userAgent);
     request.setHeader("Content-encoding: deflate");
-    const std::string payloadAsJson = this->serializer.serialize(logEvents);
-    request.setData(Zlib::deflate(payloadAsJson));
+    const std::string payloadDeflated = Zlib::deflate(this->serializer.serialize(logEvents));
+    request.setData(payloadDeflated);
     request.execute();
   }
 

@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.11)
 project (lh-mod-loghero)
 
-set( GCC_CC_FLAGS "-g -Wall -Wno-unused-local-typedefs -fPIC" )
+set(LH_MOD_CLIENT_ID "\"Apache Module loghero/httpd@0.0.1\"")
+add_definitions(-DLH_MOD_CLIENT_ID=${LH_MOD_CLIENT_ID})
+set(CMAKE_CXX_FLAGS "-g -Wall -Wno-unused-local-typedefs -fPIC")
 
 include(conanbuildinfo.cmake)
 conan_set_find_paths()
