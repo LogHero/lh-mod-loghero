@@ -39,7 +39,8 @@ namespace loghero {
     request.setHeader("User-Agent: " + this->userAgent);
     request.setHeader("Content-encoding: deflate");
     const std::string payloadAsJson = this->serializer.serialize(logEvents);
-    request.setData(Zlib::deflate(payloadAsJson));
+    const std::string payloadDeflated = Zlib::deflate(payloadAsJson);
+    request.setData(payloadDeflated);
     request.execute();
   }
 
