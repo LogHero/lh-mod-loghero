@@ -3,7 +3,7 @@ project (lh-mod-loghero)
 
 set(LH_MOD_CLIENT_ID "\"Apache Module loghero/httpd@0.0.1\"")
 add_definitions(-DLH_MOD_CLIENT_ID=${LH_MOD_CLIENT_ID})
-set(GCC_CC_FLAGS "-g -Wall -Wno-unused-local-typedefs -fPIC")
+set(CMAKE_CXX_FLAGS "-g -Wall -Wno-unused-local-typedefs -fPIC")
 
 include(conanbuildinfo.cmake)
 conan_set_find_paths()

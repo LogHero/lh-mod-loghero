@@ -24,9 +24,7 @@ link_directories(
     ${JsonCpp_LIB_DIRS}
 )
 
-add_library(loghero SHARED
-    LibLogHero.h
-    LibLogHero.cpp
+add_library(loghero_sdk STATIC
     GlobalDefines.h
     LogHeroSettings.h
     LogHeroSingleton.h
@@ -45,8 +43,14 @@ add_library(loghero SHARED
     HttpRequestCurl.cpp
 )
 
+add_library(loghero SHARED
+    LibLogHero.h
+    LibLogHero.cpp
+)
+
 target_link_libraries(
     loghero
+    loghero_sdk
     ${JsonCpp_LIBRARIES}
     ${Boost_LIBRARIES}
     ${ZLIB_LIBRARIES}
