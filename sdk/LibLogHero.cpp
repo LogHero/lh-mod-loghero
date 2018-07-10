@@ -10,6 +10,11 @@
 #include "HttpRequestCurl.h"
 
 
-void submitLogEvent(struct LogEvent *pLogEvent) {
-  loghero::LogHeroSingleton::Instance().session("YOUR_API_KEY")->submitLogEvent(loghero::LogEvent(*pLogEvent));
+void submitLogEvent(const char *apiKey, struct LogEvent *pLogEvent) {
+  std::string apiKeyAsString(apiKey);
+  if (apiKeyAsString.empty()) {
+    std::cout << "API KEY IS NOT SET!! SUBMIT CANCELLED!!" << apiKey << std::endl;
+    return;
+  }
+  loghero::LogHeroSingleton::Instance().session(apiKeyAsString)->submitLogEvent(loghero::LogEvent(*pLogEvent));
 }

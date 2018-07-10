@@ -41,6 +41,5 @@ namespace loghero {
     this->apiKeySessions[apiKey] = std::move(pSession);
   }
 
-
 }
 

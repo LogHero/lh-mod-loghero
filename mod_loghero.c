@@ -23,6 +23,41 @@
 #include "LibLogHero.h"
 
 
+typedef struct {
+  char api_key[256];
+} lh_mod_config;
+
+static lh_mod_config global_config;
+
+const char *loghero_set_api_key(cmd_parms *cmd, void *cfg, const char *arg);
+static void loghero_register_hooks(apr_pool_t *pool);
+
+static const command_rec loghero_directives[] = {
+  AP_INIT_TAKE1(
+    "logHeroApiKey",
+    loghero_set_api_key,
+    NULL,
+    RSRC_CONF,
+    "LogHero API key (For more information visit log-hero.com"
+  ),
+  { NULL }
+};
+
+module AP_MODULE_DECLARE_DATA loghero_module = {
+  STANDARD20_MODULE_STUFF,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  loghero_directives,
+  loghero_register_hooks
+};
+
+const char *loghero_set_api_key(cmd_parms *cmd, void *cfg, const char *arg) {
+  strcpy(global_config.api_key, arg);
+  return NULL;
+}
+
 static int loghero_handler(request_rec *r) {
   struct LogEvent logEvent;
   // Use apr_pescape_echo or ap_escape_logitem
@@ -30,26 +65,15 @@ static int loghero_handler(request_rec *r) {
   logEvent.hostname = r->hostname;
   logEvent.ipAddress = r->connection->client_ip;
   logEvent.userAgent = apr_table_get(r->headers_in, "user-agent");
-  logEvent.timestamp = r->request_time / 1000000; // httpd request_time is number of microseconds since 00:00:00 January 1, 1970 UTC
-  submitLogEvent(&logEvent);
-  ap_log_rerror(APLOG_MARK, APLOG_ALERT, 0, r, APLOGNO(00644) "My loghero handler was called!!! %s %i", r->uri, r->status);
+  // httpd request_time is number of microseconds since 00:00:00 January 1, 1970 UTC
+  logEvent.timestamp = r->request_time / 1000000;
+  submitLogEvent(global_config.api_key, &logEvent);
   return DECLINED;
 }
 
-
 static void loghero_register_hooks(apr_pool_t *pool) {
-  printf("\n ** loghero_register_hooks **\n\n");
+  printf("\n ** LogHero module loaded! **\n\n");
+  global_config.api_key[0] = '\0';
   // TODO: Is this the correct hook? APR_HOOK_MIDDLE??
   ap_hook_log_transaction(loghero_handler, NULL, NULL, APR_HOOK_MIDDLE);
 }
-
-
-module AP_MODULE_DECLARE_DATA   loghero_module = {
-  STANDARD20_MODULE_STUFF,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  loghero_register_hooks
-};
