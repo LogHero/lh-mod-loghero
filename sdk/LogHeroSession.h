@@ -14,14 +14,18 @@ namespace loghero {
   class LogHeroSession : public LogHeroSessionInterface {
     public:
       DISALLOW_COPY_AND_ASSIGN(LogHeroSession);
-      LogHeroSession();
+      LogHeroSession(const LogHeroSettings &settings);
       virtual ~LogHeroSession();
 
       virtual void submitLogEvent(const LogEvent &logEvent);
+
+    private:
+      LogHeroSettings settings;
   };
 
   template <class HttpRequestT, class SerializerT>
-  LogHeroSession<HttpRequestT, SerializerT>::LogHeroSession() {
+  LogHeroSession<HttpRequestT, SerializerT>::LogHeroSession(const LogHeroSettings &settings):
+  settings(settings) {
   }
 
   template <class HttpRequestT, class SerializerT>
@@ -32,8 +36,7 @@ namespace loghero {
   void LogHeroSession<HttpRequestT, SerializerT>::submitLogEvent(const LogEvent &logEvent) {
     loghero::LogEvent::List logEventList;
     logEventList.push_back(logEvent);
-    loghero::LogHeroSettings settings("YOUR_API_KEY", "Apache Module loghero/httpd@0.0.1");
-    loghero::APIAccess<HttpRequestT, SerializerT> apiAccess(settings);
+    loghero::APIAccess<HttpRequestT, SerializerT> apiAccess(this->settings);
     apiAccess.submitLogEvents(logEventList);
   }
 

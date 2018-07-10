@@ -7,15 +7,13 @@ namespace loghero {
 
   struct LogHeroSettings {
 
-    LogHeroSettings(const std::string &apiKey, const std::string &clientId):
+    LogHeroSettings(const std::string &apiKey):
     apiEndpoint("https://test.loghero.io/logs/"),
-    apiKey(apiKey),
-    clientId(clientId) {
+    apiKey(apiKey) {
     }
 
     std::string apiEndpoint;
     std::string apiKey;
-    std::string clientId;
   };
 
 }

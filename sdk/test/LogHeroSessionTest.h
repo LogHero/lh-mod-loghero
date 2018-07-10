@@ -2,6 +2,7 @@
 #define LOGHEROSESSIONTEST_H
 
 #include "LogEvent.h"
+#include "LogHeroSettings.h"
 #include "gtest/gtest.h"
 
 
@@ -13,6 +14,8 @@ namespace testing {
       LogHeroSessionTest();
 
       static std::string buildExpectedPayload(const LogEvent::List &logEvents);
+
+      LogHeroSettings settings;
   };
 
 }

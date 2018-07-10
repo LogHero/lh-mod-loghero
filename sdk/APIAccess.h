@@ -26,7 +26,7 @@ namespace loghero {
   template <class HttpRequestT, class SerializerT>
   APIAccess<HttpRequestT, SerializerT>::APIAccess(const LogHeroSettings &settings):
     settings(settings),
-    userAgent(settings.clientId + "; C++ SDK loghero/sdk@0.0.1") {
+    userAgent(std::string(LH_MOD_CLIENT_ID) + "; " + std::string(LH_SDK_CLIENT_ID)) {
   }
 
   template <class HttpRequestT, class SerializerT>

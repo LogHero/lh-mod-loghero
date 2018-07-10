@@ -6,7 +6,8 @@
 namespace loghero {
 namespace testing {
 
-  LogHeroSingletonTest::LogHeroSingletonTest() {
+  LogHeroSingletonTest::LogHeroSingletonTest():
+  settings("SOME_API_KEY") {
   }
 
   LogHeroSingletonTest::~LogHeroSingletonTest() {
@@ -27,7 +28,7 @@ namespace testing {
 
   TEST_F(LogHeroSingletonTest, SetCustomSession) {
     LogHeroSessionInterface *pDefaultSession = LogHeroSingleton::Instance().session("KEY_1");
-    LogHeroSessionInterface *pCustomSession = new LogHeroDefaultSession();
+    LogHeroSessionInterface *pCustomSession = new LogHeroDefaultSession(this->settings);
     LogHeroSingleton::Instance().resetSession("KEY_1", std::unique_ptr<LogHeroSessionInterface>(pCustomSession));
     LogHeroSessionInterface *pAccessedCustomSession = LogHeroSingleton::Instance().session("KEY_1");
     ASSERT_NE(pDefaultSession, pAccessedCustomSession);

@@ -11,7 +11,7 @@ namespace loghero {
 namespace testing {
 
   APIAccessTest::APIAccessTest():
-    logHeroSettings("SOME_API_KEY", "Test Client"){
+    logHeroSettings("SOME_API_KEY"){
     logHeroSettings.apiEndpoint = "https://test.loghero.io/logs/";
   }
 
@@ -29,7 +29,7 @@ namespace testing {
     EXPECT_CALL(httpRequestMock, setUrl("https://test.loghero.io/logs/"));
     EXPECT_CALL(httpRequestMock, setHeader("Content-type: application/json"));
     EXPECT_CALL(httpRequestMock, setHeader("Authorization: SOME_API_KEY"));
-    EXPECT_CALL(httpRequestMock, setHeader("User-Agent: Test Client; C++ SDK loghero/sdk@0.0.1"));
+    EXPECT_CALL(httpRequestMock, setHeader("User-Agent: Apache Module loghero/httpd@0.0.1; C++ SDK loghero/sdk@0.0.1"));
     EXPECT_CALL(httpRequestMock, setHeader("Content-encoding: deflate"));
     EXPECT_CALL(httpRequestMock, setData(expectedPayload));
     EXPECT_CALL(httpRequestMock, execute());

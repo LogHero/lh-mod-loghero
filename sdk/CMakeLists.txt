@@ -1,4 +1,6 @@
 set(LH_SDK_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(LH_SDK_CLIENT_ID "\"C++ SDK loghero/sdk@0.0.1\"")
+add_definitions(-DLH_SDK_CLIENT_ID=${LH_SDK_CLIENT_ID})
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 find_package(JsonCpp REQUIRED)
@@ -31,7 +33,6 @@ add_library(loghero SHARED
     LogHeroSingleton.cpp
     LogHeroSessionInterface.h
     LogHeroSession.h
-    LogHeroSession.cpp
     LogEvent.h
     LogEvent.cpp
     LogEventSerializerJson.h
