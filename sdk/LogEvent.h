@@ -44,9 +44,9 @@ namespace loghero {
         return this->timestampAsString;
       }
 
-    private:
-
       static std::string convertUnixTimestampToString(time_t timestamp);
+
+    private:
 
       static std::string createCidFromIpAndUserAgent(const std::string &ipAddress, const std::string &userAgent);
 

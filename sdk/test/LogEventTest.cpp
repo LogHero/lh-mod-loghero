@@ -22,7 +22,7 @@ namespace testing {
 
   TEST_F(LogEventTest, InitializeTimestampAsString) {
     const LogEvent logEvent(this->cLogEvent);
-    EXPECT_EQ("2018-07-04T11:10:57+0200", logEvent.getTimestampAsString());
+    EXPECT_EQ(createSampleTimestampAsString(), logEvent.getTimestampAsString());
   }
 
   TEST_F(LogEventTest, GenerateCidFromMd5HashOfIpAndUserAgent) {

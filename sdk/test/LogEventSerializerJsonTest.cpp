@@ -20,7 +20,7 @@ namespace testing {
                                           "\"e254fc99d969b359dbb498b8ab8e5ee5\","
                                           "\"www.loghero.io\","
                                           "\"/landing/page/path\","
-                                          "\"2018-07-04T11:10:57+0200\","
+                                          "\"" + createSampleTimestampAsString() + "\","
                                           "\"Google Bot\""
                                         "]";
     const std::string jsonExpected = "{"
