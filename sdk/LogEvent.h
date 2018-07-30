@@ -36,6 +36,14 @@ namespace loghero {
         return this->hostname;
       }
 
+      const inline std::string& getMethod() const {
+        return this->method;
+      }
+
+      const inline int getStatusCode() const {
+        return this->statusCode;
+      }
+
       const inline time_t getTimestamp() const {
         return this->timestamp;
       }
@@ -56,9 +64,11 @@ namespace loghero {
       const std::string ipAddress;
       const std::string userAgent;
       const std::string hostname;
+      const std::string method;
       const time_t timestamp;
       const std::string timestampAsString;
       const std::string cid;
+      const int statusCode;
 
   };
 }

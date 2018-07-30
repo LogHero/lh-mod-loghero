@@ -12,6 +12,8 @@ namespace loghero {
     this->pColumnsValue->append("cid");
     this->pColumnsValue->append("hostname");
     this->pColumnsValue->append("landingPage");
+    this->pColumnsValue->append("method");
+    this->pColumnsValue->append("statusCode");
     this->pColumnsValue->append("timesamp");
     this->pColumnsValue->append("ua");
   }
@@ -37,6 +39,8 @@ namespace loghero {
     row.append(logEvent.getCid());
     row.append(logEvent.getHostname());
     row.append(logEvent.getLandingPagePath());
+    row.append(logEvent.getMethod());
+    row.append(logEvent.getStatusCode());
     row.append(logEvent.getTimestampAsString());
     row.append(logEvent.getUserAgent());
     return row;

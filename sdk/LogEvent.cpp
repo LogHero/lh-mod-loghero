@@ -15,11 +15,13 @@ namespace loghero {
     ipAddress(cLogEvent.ipAddress),
     userAgent(cLogEvent.userAgent),
     hostname(cLogEvent.hostname),
+    method(cLogEvent.method),
     timestamp(static_cast<time_t>(cLogEvent.timestamp)),
     timestampAsString(
       LogEvent::convertUnixTimestampToString(static_cast<time_t>(cLogEvent.timestamp))
     ),
-    cid(LogEvent::md5Digest(std::string(cLogEvent.ipAddress) + std::string(cLogEvent.userAgent))) {
+    cid(LogEvent::md5Digest(std::string(cLogEvent.ipAddress) + std::string(cLogEvent.userAgent))),
+    statusCode(cLogEvent.statusCode) {
   }
 
   std::string LogEvent::convertUnixTimestampToString(time_t timestamp)
