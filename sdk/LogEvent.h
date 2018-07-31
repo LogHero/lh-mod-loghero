@@ -24,8 +24,16 @@ namespace loghero {
         return this->ipAddress;
       }
 
+      const inline std::string& getIpHash() const {
+        return this->ipHash;
+      }
+
       const inline std::string& getUserAgent() const {
         return this->userAgent;
+      }
+
+      const inline std::string& getReferer() const {
+        return this->referer;
       }
 
       const inline std::string& getCid() const {
@@ -36,12 +44,24 @@ namespace loghero {
         return this->hostname;
       }
 
+      const inline std::string& getMethod() const {
+        return this->method;
+      }
+
+      const inline int getStatusCode() const {
+        return this->statusCode;
+      }
+
       const inline time_t getTimestamp() const {
         return this->timestamp;
       }
 
       const inline std::string& getTimestampAsString() const {
         return this->timestampAsString;
+      }
+
+      const inline time_t getPageLoadTimeMilliSec() const {
+        return this->pageLoadTimeMilliSec;
       }
 
       static std::string convertUnixTimestampToString(time_t timestamp);
@@ -56,9 +76,14 @@ namespace loghero {
       const std::string ipAddress;
       const std::string userAgent;
       const std::string hostname;
+      const std::string method;
+      const std::string referer;
       const time_t timestamp;
       const std::string timestampAsString;
+      const time_t pageLoadTimeMilliSec;
       const std::string cid;
+      const std::string ipHash;
+      const int statusCode;
 
   };
 }

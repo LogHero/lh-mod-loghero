@@ -10,7 +10,11 @@ extern "C" {
     const char *userAgent;
     const char *ipAddress;
     const char *hostname;
+    const char *method;
+    const char *referer;
     long timestamp;
+    long pageLoadTimeMilliSec;
+    int statusCode;
   };
 
   void submitLogEvent(const char *apiKey, struct LogEvent *logEvent);

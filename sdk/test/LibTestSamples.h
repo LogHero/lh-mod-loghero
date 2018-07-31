@@ -19,6 +19,10 @@ namespace testing {
     cLogEvent.ipAddress = "123.45.67.89";
     cLogEvent.timestamp = createSampleTimestamp();
     cLogEvent.userAgent = "Google Bot";
+    cLogEvent.method = "PUT";
+    cLogEvent.referer = "www.google.de";
+    cLogEvent.statusCode = 201;
+    cLogEvent.pageLoadTimeMilliSec = 123;
     return cLogEvent;
   }
 
