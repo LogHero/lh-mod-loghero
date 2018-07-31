@@ -65,6 +65,7 @@ static int loghero_handler(request_rec *r) {
   logEvent.hostname = r->hostname;
   logEvent.ipAddress = r->connection->client_ip;
   logEvent.userAgent = apr_table_get(r->headers_in, "user-agent");
+  logEvent.referer = apr_table_get(r->headers_in, "referer");
   // httpd request_time is number of microseconds since 00:00:00 January 1, 1970 UTC
   logEvent.timestamp = apr_time_msec(r->request_time);
   logEvent.statusCode = r->status;

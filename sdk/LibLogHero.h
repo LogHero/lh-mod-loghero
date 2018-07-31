@@ -11,6 +11,7 @@ extern "C" {
     const char *ipAddress;
     const char *hostname;
     const char *method;
+    const char *referer;
     long timestamp;
     long pageLoadTimeMilliSec;
     int statusCode;

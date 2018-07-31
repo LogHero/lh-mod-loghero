@@ -18,6 +18,7 @@ namespace loghero {
     this->pColumnsValue->append("timesamp");
     this->pColumnsValue->append("pageLoadTime");
     this->pColumnsValue->append("ua");
+    this->pColumnsValue->append("referer");
   }
 
   LogEventSerializerJson::~LogEventSerializerJson() {
@@ -47,6 +48,7 @@ namespace loghero {
     row.append(logEvent.getTimestampAsString());
     row.append(logEvent.getPageLoadTimeMilliSec());
     row.append(logEvent.getUserAgent());
+    row.append(logEvent.getReferer());
     return row;
   }
 

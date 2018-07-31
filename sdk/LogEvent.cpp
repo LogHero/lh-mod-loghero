@@ -16,6 +16,7 @@ namespace loghero {
     userAgent(cLogEvent.userAgent),
     hostname(cLogEvent.hostname),
     method(cLogEvent.method),
+    referer(cLogEvent.referer),
     timestamp(static_cast<time_t>(cLogEvent.timestamp)),
     timestampAsString(LogEvent::convertUnixTimestampToString(static_cast<time_t>(cLogEvent.timestamp))),
     pageLoadTimeMilliSec(cLogEvent.pageLoadTimeMilliSec),

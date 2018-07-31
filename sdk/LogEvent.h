@@ -32,6 +32,10 @@ namespace loghero {
         return this->userAgent;
       }
 
+      const inline std::string& getReferer() const {
+        return this->referer;
+      }
+
       const inline std::string& getCid() const {
         return this->cid;
       }
@@ -73,6 +77,7 @@ namespace loghero {
       const std::string userAgent;
       const std::string hostname;
       const std::string method;
+      const std::string referer;
       const time_t timestamp;
       const std::string timestampAsString;
       const time_t pageLoadTimeMilliSec;
