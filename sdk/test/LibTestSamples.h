@@ -21,6 +21,7 @@ namespace testing {
     cLogEvent.userAgent = "Google Bot";
     cLogEvent.method = "PUT";
     cLogEvent.statusCode = 201;
+    cLogEvent.pageLoadTimeMilliSec = 123;
     return cLogEvent;
   }
 

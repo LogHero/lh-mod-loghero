@@ -66,9 +66,10 @@ static int loghero_handler(request_rec *r) {
   logEvent.ipAddress = r->connection->client_ip;
   logEvent.userAgent = apr_table_get(r->headers_in, "user-agent");
   // httpd request_time is number of microseconds since 00:00:00 January 1, 1970 UTC
-  logEvent.timestamp = r->request_time / 1000000;
+  logEvent.timestamp = apr_time_msec(r->request_time);
   logEvent.statusCode = r->status;
   logEvent.method = r->method;
+  logEvent.pageLoadTimeMilliSec = apr_time_msec(apr_time_now() - r->request_time);
   submitLogEvent(global_config.api_key, &logEvent);
   return DECLINED;
 }
@@ -76,6 +77,5 @@ static int loghero_handler(request_rec *r) {
 static void loghero_register_hooks(apr_pool_t *pool) {
   printf("\n ** LogHero module loaded! **\n\n");
   global_config.api_key[0] = '\0';
-  // TODO: Is this the correct hook? APR_HOOK_MIDDLE??
   ap_hook_log_transaction(loghero_handler, NULL, NULL, APR_HOOK_MIDDLE);
 }

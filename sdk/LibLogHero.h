@@ -12,6 +12,7 @@ extern "C" {
     const char *hostname;
     const char *method;
     long timestamp;
+    long pageLoadTimeMilliSec;
     int statusCode;
   };
 

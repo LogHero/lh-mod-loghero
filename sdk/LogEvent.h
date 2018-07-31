@@ -56,6 +56,10 @@ namespace loghero {
         return this->timestampAsString;
       }
 
+      const inline time_t getPageLoadTimeMilliSec() const {
+        return this->pageLoadTimeMilliSec;
+      }
+
       static std::string convertUnixTimestampToString(time_t timestamp);
 
     private:
@@ -71,6 +75,7 @@ namespace loghero {
       const std::string method;
       const time_t timestamp;
       const std::string timestampAsString;
+      const time_t pageLoadTimeMilliSec;
       const std::string cid;
       const std::string ipHash;
       const int statusCode;

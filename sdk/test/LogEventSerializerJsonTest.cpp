@@ -24,6 +24,7 @@ namespace testing {
                                           "\"PUT\","
                                           "201,"
                                           "\"" + createSampleTimestampAsString() + "\","
+                                          "123,"
                                           "\"Google Bot\""
                                         "]";
     const std::string jsonExpected = "{"
@@ -35,6 +36,7 @@ namespace testing {
                                    "\"method\","
                                    "\"statusCode\","
                                    "\"timesamp\","
+                                   "\"pageLoadTime\","
                                    "\"ua\""
                                  "],"
                                  "\"rows\":["

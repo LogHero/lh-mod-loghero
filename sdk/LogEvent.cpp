@@ -18,6 +18,7 @@ namespace loghero {
     method(cLogEvent.method),
     timestamp(static_cast<time_t>(cLogEvent.timestamp)),
     timestampAsString(LogEvent::convertUnixTimestampToString(static_cast<time_t>(cLogEvent.timestamp))),
+    pageLoadTimeMilliSec(cLogEvent.pageLoadTimeMilliSec),
     cid(LogEvent::md5Digest(std::string(cLogEvent.ipAddress) + std::string(cLogEvent.userAgent))),
     ipHash(LogEvent::md5Digest(std::string(cLogEvent.ipAddress))),
     statusCode(cLogEvent.statusCode) {

@@ -16,6 +16,7 @@ namespace loghero {
     this->pColumnsValue->append("method");
     this->pColumnsValue->append("statusCode");
     this->pColumnsValue->append("timesamp");
+    this->pColumnsValue->append("pageLoadTime");
     this->pColumnsValue->append("ua");
   }
 
@@ -44,6 +45,7 @@ namespace loghero {
     row.append(logEvent.getMethod());
     row.append(logEvent.getStatusCode());
     row.append(logEvent.getTimestampAsString());
+    row.append(logEvent.getPageLoadTimeMilliSec());
     row.append(logEvent.getUserAgent());
     return row;
   }
