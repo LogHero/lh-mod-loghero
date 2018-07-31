@@ -24,6 +24,10 @@ namespace loghero {
         return this->ipAddress;
       }
 
+      const inline std::string& getIpHash() const {
+        return this->ipHash;
+      }
+
       const inline std::string& getUserAgent() const {
         return this->userAgent;
       }
@@ -68,6 +72,7 @@ namespace loghero {
       const time_t timestamp;
       const std::string timestampAsString;
       const std::string cid;
+      const std::string ipHash;
       const int statusCode;
 
   };

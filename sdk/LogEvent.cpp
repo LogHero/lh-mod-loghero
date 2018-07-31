@@ -17,10 +17,9 @@ namespace loghero {
     hostname(cLogEvent.hostname),
     method(cLogEvent.method),
     timestamp(static_cast<time_t>(cLogEvent.timestamp)),
-    timestampAsString(
-      LogEvent::convertUnixTimestampToString(static_cast<time_t>(cLogEvent.timestamp))
-    ),
+    timestampAsString(LogEvent::convertUnixTimestampToString(static_cast<time_t>(cLogEvent.timestamp))),
     cid(LogEvent::md5Digest(std::string(cLogEvent.ipAddress) + std::string(cLogEvent.userAgent))),
+    ipHash(LogEvent::md5Digest(std::string(cLogEvent.ipAddress))),
     statusCode(cLogEvent.statusCode) {
   }
 
@@ -34,7 +33,7 @@ namespace loghero {
 
   std::string LogEvent::md5Digest(const std::string &input) {
     unsigned char digest[MD5_DIGEST_LENGTH];
-    MD5((unsigned char*)input.c_str(), input.size(), digest);
+    MD5(reinterpret_cast<const unsigned char*>(input.c_str()), input.size(), digest);
     std::ostringstream sout;
     sout << std::hex << std::setfill('0');
     for(long long c: digest) {

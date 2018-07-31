@@ -30,5 +30,10 @@ namespace testing {
     EXPECT_EQ("e254fc99d969b359dbb498b8ab8e5ee5", logEvent.getCid());
   }
 
+  TEST_F(LogEventTest, GeneratMd5HashOfIp) {
+    const LogEvent logEvent(this->cLogEvent);
+    EXPECT_EQ("03de6422045e4ed3ac822c673ace32d1", logEvent.getIpHash());
+  }
+
 }
 }

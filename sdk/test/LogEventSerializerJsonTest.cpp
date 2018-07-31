@@ -18,6 +18,7 @@ namespace testing {
   TEST_F(LogEventSerializerJsonTest, SerializeLogEventList) {
     const std::string rowJsonExpected = "["
                                           "\"e254fc99d969b359dbb498b8ab8e5ee5\","
+                                          "\"03de6422045e4ed3ac822c673ace32d1\","
                                           "\"www.loghero.io\","
                                           "\"/landing/page/path\","
                                           "\"PUT\","
@@ -28,6 +29,7 @@ namespace testing {
     const std::string jsonExpected = "{"
                                  "\"columns\":["
                                    "\"cid\","
+                                   "\"ip\","
                                    "\"hostname\","
                                    "\"landingPage\","
                                    "\"method\","
