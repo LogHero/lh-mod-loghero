@@ -11,14 +11,17 @@ namespace loghero {
 namespace testing {
 
   LogHeroSessionTest::LogHeroSessionTest():
-  settings("SOME_API_KEY") {
+    settings("SOME_API_KEY"),
+    bufferSettings(3) {
   }
 
   TEST_F(LogHeroSessionTest, DeflateLogEventAndSendToAPI) {
     LogEvent logEvent(createCLogEventSample());
-    LogEvent::List logEventList;
-    logEventList.push_back(logEvent);
-    const std::string expectedPayload = this->buildExpectedPayload(logEventList);
+    LogEvent::List logEventListPushExpected;
+    logEventListPushExpected.push_back(logEvent);
+    logEventListPushExpected.push_back(logEvent);
+    logEventListPushExpected.push_back(logEvent);
+    const std::string expectedPayload = this->buildExpectedPayload(logEventListPushExpected);
     MockHttpRequest httpRequestMock;
     EXPECT_CALL(httpRequestMock, setMethod("PUT"));
     EXPECT_CALL(httpRequestMock, setUrl("https://test.loghero.io/logs/"));
@@ -29,7 +32,11 @@ namespace testing {
     EXPECT_CALL(httpRequestMock, setData(expectedPayload));
     EXPECT_CALL(httpRequestMock, execute());
     FakeHttpRequest::resetRequestMock(&httpRequestMock);
-    LogHeroSession<FakeHttpRequest, LogEventSerializerJson> session(settings);
+    LogHeroSession<DefaultLogBuffer, FakeHttpRequest, LogEventSerializerJson> session(settings, bufferSettings);
+    session.submitLogEvent(logEvent);
+    session.submitLogEvent(logEvent);
+    session.submitLogEvent(logEvent);
+    session.submitLogEvent(logEvent);
     session.submitLogEvent(logEvent);
   }
 

@@ -3,6 +3,7 @@
 
 #include "LogEvent.h"
 #include "LogHeroSettings.h"
+#include "LogContainerPolicyInMemory.h"
 #include "gtest/gtest.h"
 
 
@@ -16,6 +17,7 @@ namespace testing {
       static std::string buildExpectedPayload(const LogEvent::List &logEvents);
 
       LogHeroSettings settings;
+      LogContainerPolicyInMemory::Settings bufferSettings;
   };
 
 }

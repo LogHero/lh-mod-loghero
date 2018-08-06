@@ -12,7 +12,7 @@ namespace loghero {
 
   // TODO Unit test to check thread safety
   template <class ContainerPolicy, class LockingPolicy = LockingPolicyLockGuard>
-  class LogBuffer : protected LockingPolicy, ContainerPolicy {
+  class LogBuffer : protected LockingPolicy, public ContainerPolicy {
     public:
 
       DISALLOW_COPY_AND_ASSIGN(LogBuffer);
