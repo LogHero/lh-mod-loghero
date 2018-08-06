@@ -41,6 +41,9 @@ add_library(loghero_sdk STATIC
     HttpRequestInterface.h
     HttpRequestCurl.h
     HttpRequestCurl.cpp
+    LogBuffer.h
+    LogContainerPolicyInMemory.h
+    LockingPolicyLockGuard.h
 )
 
 add_library(loghero SHARED

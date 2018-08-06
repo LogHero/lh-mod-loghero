@@ -24,6 +24,8 @@ add_executable(
     MockHttpRequest.h
     FakeHttpRequest.h
     FakeHttpRequest.cpp
+    LogBufferTest.h
+    LogBufferTest.cpp
 )
 
 target_link_libraries(

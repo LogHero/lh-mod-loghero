@@ -17,6 +17,7 @@ namespace loghero {
       LogHeroSession(const LogHeroSettings &settings);
       virtual ~LogHeroSession();
 
+      // TODO: This method is not thread save
       virtual void submitLogEvent(const LogEvent &logEvent);
 
     private:
