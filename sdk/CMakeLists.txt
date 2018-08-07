@@ -44,6 +44,7 @@ add_library(loghero_sdk STATIC
     LogBuffer.h
     LogContainerPolicyInMemory.h
     LockingPolicyLockGuard.h
+    TimerPolicyCTime.h
 )
 
 add_library(loghero SHARED

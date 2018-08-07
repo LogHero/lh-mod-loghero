@@ -8,10 +8,17 @@ namespace testing {
 
   LogBufferTest::LogBufferTest():
     containerSettings(5) {
+    TimerPolicyMock::resetMockInstance(&timerMock);
+  }
+
+  TEST_F(LogBufferTest, InitializeTimerInConstructor) {
+    EXPECT_CALL(this->timerMock, mockedReset());
+    LogBuffer<LogContainerPolicyInMemory, TimerPolicyMock> logBuffer(this->containerSettings);
   }
 
   TEST_F(LogBufferTest, CollectAndDumpLogEvents) {
-    LogBuffer<LogContainerPolicyInMemory> logBuffer(this->containerSettings);
+    EXPECT_CALL(this->timerMock, mockedReset()).Times(4);
+    LogBuffer<LogContainerPolicyInMemory, TimerPolicyMock> logBuffer(this->containerSettings);
     logBuffer.push(LogEvent(createCLogEventSample()));
     logBuffer.push(LogEvent(createCLogEventSample()));
     logBuffer.push(LogEvent(createCLogEventSample()));
@@ -25,8 +32,9 @@ namespace testing {
     ASSERT_EQ(pDumpedEvents3->size(), std::size_t(2));
   }
 
-  TEST_F(LogBufferTest, NeedsDumping) {
-    LogBuffer<LogContainerPolicyInMemory> logBuffer(this->containerSettings);
+  TEST_F(LogBufferTest, NeedsDumpingIfMaximumBufferSizeReached) {
+    EXPECT_CALL(this->timerMock, mockedReset()).Times(2);
+    LogBuffer<LogContainerPolicyInMemory, TimerPolicyMock> logBuffer(this->containerSettings);
     logBuffer.push(LogEvent(createCLogEventSample()));
     logBuffer.push(LogEvent(createCLogEventSample()));
     logBuffer.push(LogEvent(createCLogEventSample()));
@@ -38,5 +46,13 @@ namespace testing {
     ASSERT_FALSE(logBuffer.needsDumping());
   }
 
+  TEST_F(LogBufferTest, NeedsDumpingIfMaximumTimeIntervalReached) {
+    EXPECT_CALL(this->timerMock, mockedReset());
+    LogBuffer<LogContainerPolicyInMemory, TimerPolicyMock> logBuffer(this->containerSettings);
+    logBuffer.push(LogEvent(createCLogEventSample()));
+    ASSERT_FALSE(logBuffer.needsDumping());
+    timerMock.setTimeElapsedSeconds(60);
+    ASSERT_TRUE(logBuffer.needsDumping());
+  }
 
 }}

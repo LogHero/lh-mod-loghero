@@ -11,8 +11,8 @@
 namespace loghero {
 
   // TODO Unit test to check thread safety
-  template <class ContainerPolicy, class LockingPolicy = LockingPolicyLockGuard>
-  class LogBuffer : protected LockingPolicy, public ContainerPolicy {
+  template <class ContainerPolicy, class TimerPolicy, class LockingPolicy = LockingPolicyLockGuard>
+  class LogBuffer : protected LockingPolicy, TimerPolicy, public ContainerPolicy {
     public:
 
       DISALLOW_COPY_AND_ASSIGN(LogBuffer);
@@ -25,31 +25,34 @@ namespace loghero {
 
   };
 
-  template <class ContainerPolicy, class LockingPolicy>
-  LogBuffer<ContainerPolicy, LockingPolicy>::LogBuffer(const typename ContainerPolicy::Settings &containerSettings) :
+  template <class ContainerPolicy, class TimerPolicy, class LockingPolicy>
+  LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::LogBuffer(const typename ContainerPolicy::Settings &containerSettings) :
     ContainerPolicy(containerSettings) {
+    TimerPolicy::reset();
   }
 
-  template <class ContainerPolicy, class LockingPolicy>
-  LogBuffer<ContainerPolicy, LockingPolicy>::~LogBuffer() {
+  template <class ContainerPolicy, class TimerPolicy, class LockingPolicy>
+  LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::~LogBuffer() {
   }
 
-  template <class ContainerPolicy, class LockingPolicy>
-  void LogBuffer<ContainerPolicy, LockingPolicy>::push(const LogEvent &logEvent) {
+  template <class ContainerPolicy, class TimerPolicy, class LockingPolicy>
+  void LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::push(const LogEvent &logEvent) {
     typename LockingPolicy::Lock lock(this->mutex);
     ContainerPolicy::pushLogEvent(logEvent);
   }
 
-  template <class ContainerPolicy, class LockingPolicy>
-  std::unique_ptr<LogEvent::List> LogBuffer<ContainerPolicy, LockingPolicy>::dump() {
+  template <class ContainerPolicy, class TimerPolicy, class LockingPolicy>
+  std::unique_ptr<LogEvent::List> LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::dump() {
     typename LockingPolicy::Lock lock(this->mutex);
-    return ContainerPolicy::dumpLogEvents();
+    std::unique_ptr<LogEvent::List> pLogEvents = ContainerPolicy::dumpLogEvents();
+    TimerPolicy::reset();
+    return pLogEvents;
   }
 
-  template <class ContainerPolicy, class LockingPolicy>
-  bool LogBuffer<ContainerPolicy, LockingPolicy>::needsDumping() const {
+  template <class ContainerPolicy, class TimerPolicy, class LockingPolicy>
+  bool LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::needsDumping() const {
     typename LockingPolicy::Lock lock(this->mutex);
-    return ContainerPolicy::logEventsNeedDumping();
+    return ContainerPolicy::logEventsNeedDumping() || TimerPolicy::timeout();
   }
 
 }

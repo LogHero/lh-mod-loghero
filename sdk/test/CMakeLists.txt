@@ -26,6 +26,10 @@ add_executable(
     FakeHttpRequest.cpp
     LogBufferTest.h
     LogBufferTest.cpp
+    TimerPolicyMock.h
+    TimerPolicyMock.cpp
+    TimerPolicyTest.h
+    TimerPolicyTest.cpp
 )
 
 target_link_libraries(

@@ -6,7 +6,7 @@
 #include "APIAccess.h"
 #include "LogBuffer.h"
 #include "LogContainerPolicyInMemory.h"
-#include "LockingPolicyLockGuard.h"
+#include "TimerPolicyCTime.h"
 #include "HttpRequestCurl.h"
 #include "LogEventSerializerJson.h"
 
@@ -51,7 +51,7 @@ namespace loghero {
     }
   }
 
-  typedef LogBuffer<LogContainerPolicyInMemory, LockingPolicyLockGuard> DefaultLogBuffer;
+  typedef LogBuffer<LogContainerPolicyInMemory, TimerPolicyCTime> DefaultLogBuffer;
   typedef LogHeroSession<DefaultLogBuffer, HttpRequestCurl, LogEventSerializerJson> LogHeroDefaultSession;
 }
 
