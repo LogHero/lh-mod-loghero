@@ -11,17 +11,17 @@
 namespace loghero {
 
   LogEvent::LogEvent(const ::LogEvent &cLogEvent) :
-    landingPagePath(cLogEvent.landingPagePath),
-    ipAddress(cLogEvent.ipAddress),
-    userAgent(cLogEvent.userAgent),
-    hostname(cLogEvent.hostname),
-    method(cLogEvent.method),
-    referer(cLogEvent.referer),
+    landingPagePath(LogEvent::setStringValue(cLogEvent.landingPagePath)),
+    ipAddress(LogEvent::setStringValue(cLogEvent.ipAddress)),
+    userAgent(LogEvent::setStringValue(cLogEvent.userAgent)),
+    hostname(LogEvent::setStringValue(cLogEvent.hostname)),
+    method(LogEvent::setStringValue(cLogEvent.method)),
+    referer(LogEvent::setStringValue(cLogEvent.referer)),
     timestamp(static_cast<time_t>(cLogEvent.timestamp)),
     timestampAsString(LogEvent::convertUnixTimestampToString(static_cast<time_t>(cLogEvent.timestamp))),
     pageLoadTimeMilliSec(cLogEvent.pageLoadTimeMilliSec),
-    cid(LogEvent::md5Digest(std::string(cLogEvent.ipAddress) + std::string(cLogEvent.userAgent))),
-    ipHash(LogEvent::md5Digest(std::string(cLogEvent.ipAddress))),
+    cid(LogEvent::md5Digest(LogEvent::setStringValue(cLogEvent.ipAddress) + LogEvent::setStringValue(cLogEvent.userAgent))),
+    ipHash(LogEvent::md5Digest(LogEvent::setStringValue(cLogEvent.ipAddress))),
     statusCode(cLogEvent.statusCode) {
   }
 
@@ -42,6 +42,10 @@ namespace loghero {
         sout << std::setw(2) << c;
     }
     return sout.str();
+  }
+
+  std::string LogEvent::setStringValue(const char *cValue) {
+    return cValue ? cValue : "";
   }
 
 }

@@ -35,5 +35,23 @@ namespace testing {
     EXPECT_EQ("03de6422045e4ed3ac822c673ace32d1", logEvent.getIpHash());
   }
 
+  TEST_F(LogEventTest, HandleNullCString) {
+    this->cLogEvent.referer = NULL;
+    this->cLogEvent.userAgent = NULL;
+    this->cLogEvent.landingPagePath = NULL;
+    this->cLogEvent.ipAddress = NULL;
+    this->cLogEvent.hostname = NULL;
+    this->cLogEvent.method = NULL;
+    const LogEvent logEvent(this->cLogEvent);
+    EXPECT_EQ("", logEvent.getReferer());
+    EXPECT_EQ("", logEvent.getUserAgent());
+    EXPECT_EQ("", logEvent.getLandingPagePath());
+    EXPECT_EQ("", logEvent.getIpAddress());
+    EXPECT_EQ("", logEvent.getHostname());
+    EXPECT_EQ("", logEvent.getMethod());
+    EXPECT_EQ("d41d8cd98f00b204e9800998ecf8427e", logEvent.getIpHash());
+    EXPECT_EQ("d41d8cd98f00b204e9800998ecf8427e", logEvent.getCid());
+  }
+
 }
 }
