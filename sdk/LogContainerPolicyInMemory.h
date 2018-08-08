@@ -43,7 +43,7 @@ namespace loghero {
 
   inline std::unique_ptr<LogEvent::List> LogContainerPolicyInMemory::dumpLogEvents() {
     std::unique_ptr<LogEvent::List> pLogEventListForDumping = std::move(this->pLogEventList);
-    pLogEventList = std::unique_ptr<LogEvent::List>(new LogEvent::List());
+    this->pLogEventList = std::unique_ptr<LogEvent::List>(new LogEvent::List());
     return pLogEventListForDumping;
   }
 }
