@@ -16,5 +16,6 @@ void submitLogEvent(const char *apiKey, struct LogEvent *pLogEvent) {
     std::cout << "API KEY IS NOT SET!! SUBMIT CANCELLED!!" << apiKey << std::endl;
     return;
   }
-  loghero::LogHeroSingleton::Instance().session(apiKeyAsString)->submitLogEvent(loghero::LogEvent(*pLogEvent));
+  const loghero::LogEvent logEvent(*pLogEvent);
+  loghero::LogHeroSingleton::Instance().session(apiKeyAsString)->submitLogEvent(logEvent);
 }

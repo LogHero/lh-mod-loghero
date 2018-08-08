@@ -72,6 +72,8 @@ namespace loghero {
 
       static std::string md5Digest(const std::string &input);
 
+      static std::string setStringValue(const char *cValue);
+
       const std::string landingPagePath;
       const std::string ipAddress;
       const std::string userAgent;

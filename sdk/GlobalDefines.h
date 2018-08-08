@@ -10,7 +10,7 @@
 
 namespace loghero {
   typedef int64_t int64_t;
-  typedef uint64_t uint64_T;
+  typedef uint64_t uint64_t;
   typedef std::time_t time_t;
 }
 

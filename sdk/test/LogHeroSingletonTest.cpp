@@ -7,7 +7,7 @@ namespace loghero {
 namespace testing {
 
   LogHeroSingletonTest::LogHeroSingletonTest():
-  settings("SOME_API_KEY") {
+    settings("SOME_API_KEY") {
   }
 
   LogHeroSingletonTest::~LogHeroSingletonTest() {

@@ -3,6 +3,7 @@
 
 #include "LogEvent.h"
 #include "LogHeroSettings.h"
+#include "LogContainerPolicyInMemory.h"
 #include "gtest/gtest.h"
 
 

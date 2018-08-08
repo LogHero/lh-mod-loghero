@@ -2,6 +2,7 @@
 #define LOGHEROSINGLETON_H
 
 #include "LogHeroSessionInterface.h"
+#include "LockingPolicyLockGuard.h"
 #include "loki/Singleton.h"
 
 #include <map>
@@ -12,7 +13,8 @@
 
 namespace loghero {
 
-  class LogHero {
+  template <class LockingPolicy = LockingPolicyLockGuard>
+  class LogHero : public LockingPolicyLockGuard {
     public:
 
       LogHeroSessionInterface* session(const std::string &apiKey);
@@ -31,11 +33,10 @@ namespace loghero {
 
       void resetSessionInternally(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession);
 
-      std::mutex mutex;
       SessionMapT apiKeySessions;
   };
 
-  typedef Loki::SingletonHolder<LogHero> LogHeroSingleton;
+  typedef Loki::SingletonHolder< LogHero<LockingPolicyLockGuard> > LogHeroSingleton;
 
 }
 

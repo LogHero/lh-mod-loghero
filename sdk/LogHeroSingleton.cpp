@@ -6,14 +6,17 @@
 
 namespace loghero {
 
-  LogHero::LogHero() {
+  template <class LockingPolicy>
+  LogHero<LockingPolicy>::LogHero() {
   }
 
-  LogHero::~LogHero() {
+  template <class LockingPolicy>
+  LogHero<LockingPolicy>::~LogHero() {
   }
 
-  LogHeroSessionInterface* LogHero::session(const std::string &apiKey) {
-    std::lock_guard<std::mutex> lock(this->mutex);
+  template <class LockingPolicy>
+  LogHeroSessionInterface* LogHero<LockingPolicy>::session(const std::string &apiKey) {
+    typename LockingPolicy::Lock lock(this->mutex);
     SessionMapT::iterator it = this->apiKeySessions.find(apiKey);
     if (it == this->apiKeySessions.end()) {
       loghero::LogHeroSettings settings(apiKey);
@@ -27,19 +30,23 @@ namespace loghero {
     return it->second.get();
   }
 
-  void LogHero::resetSession(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession) {
-    std::lock_guard<std::mutex> lock(this->mutex);
+  template <class LockingPolicy>
+  void LogHero<LockingPolicy>::resetSession(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession) {
+    typename LockingPolicy::Lock lock(this->mutex);
     this->resetSessionInternally(apiKey, std::move(pSession));
   }
 
-  void LogHero::clearSessions() {
-    std::lock_guard<std::mutex> lock(this->mutex);
+  template <class LockingPolicy>
+  void LogHero<LockingPolicy>::clearSessions() {
+    typename LockingPolicy::Lock lock(this->mutex);
     this->apiKeySessions.clear();
   }
 
-  void LogHero::resetSessionInternally(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession) {
+  template <class LockingPolicy>
+  void LogHero<LockingPolicy>::resetSessionInternally(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession) {
     this->apiKeySessions[apiKey] = std::move(pSession);
   }
 
+  template class LogHero<LockingPolicyLockGuard>;
 }
 
