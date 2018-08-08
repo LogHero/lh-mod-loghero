@@ -10,6 +10,7 @@ namespace loghero {
   class TimerPolicyCTime {
     public:
 
+      DISALLOW_COPY_AND_ASSIGN(TimerPolicyCTime);
       TimerPolicyCTime(const LogHeroSettings &settings);
       virtual ~TimerPolicyCTime();
 

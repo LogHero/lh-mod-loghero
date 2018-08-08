@@ -8,6 +8,8 @@ namespace loghero {
   class LockingPolicyLockGuard {
     public:
 
+      DISALLOW_COPY_AND_ASSIGN(LockingPolicyLockGuard);
+      LockingPolicyLockGuard(){}
       virtual ~LockingPolicyLockGuard(){}
 
       typedef std::lock_guard<std::mutex> Lock;

@@ -10,6 +10,8 @@ namespace loghero {
 
   class LogContainerPolicyInMemory {
     public:
+
+      DISALLOW_COPY_AND_ASSIGN(LogContainerPolicyInMemory);
       virtual ~LogContainerPolicyInMemory(){}
 
     protected:
