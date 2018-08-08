@@ -28,8 +28,8 @@ namespace loghero {
 
   template <class ContainerPolicy, class TimerPolicy, class LockingPolicy>
   LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::LogBuffer(const LogHeroSettings &settings) :
-    ContainerPolicy(settings),
-    TimerPolicy(settings) {
+    TimerPolicy(settings),
+    ContainerPolicy(settings) {
     TimerPolicy::reset();
   }
 
