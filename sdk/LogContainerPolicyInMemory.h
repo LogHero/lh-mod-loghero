@@ -2,6 +2,7 @@
 #define LOGCONTAINERPOLICYINMEMORY_H
 
 #include "LogEvent.h"
+#include "LogHeroSettings.h"
 
 #include <memory>
 
@@ -11,26 +12,19 @@ namespace loghero {
     public:
       virtual ~LogContainerPolicyInMemory(){}
 
-      struct Settings {
-        explicit Settings(uint64_t maxLogEvents = 500) :
-          maxLogEvents(maxLogEvents) {
-        }
-        uint64_t maxLogEvents;
-      };
-
     protected:
-      LogContainerPolicyInMemory(const Settings &settings);
+      LogContainerPolicyInMemory(const LogHeroSettings &settings);
       void pushLogEvent(const LogEvent &logEvent);
       bool logEventsNeedDumping() const;
       std::unique_ptr<LogEvent::List> dumpLogEvents();
 
     private:
-      Settings settings;
+      uint64_t maxLogEvents;
       std::unique_ptr<LogEvent::List> pLogEventList;
   };
 
-  inline LogContainerPolicyInMemory::LogContainerPolicyInMemory(const Settings &settings) :
-    settings(settings),
+  inline LogContainerPolicyInMemory::LogContainerPolicyInMemory(const LogHeroSettings &settings) :
+    maxLogEvents(settings.maxLogEventsInBuffer),
     pLogEventList(new LogEvent::List()) {
   }
 
@@ -39,7 +33,7 @@ namespace loghero {
   }
 
   inline bool LogContainerPolicyInMemory::logEventsNeedDumping() const {
-    if (this->pLogEventList->size() >= this->settings.maxLogEvents) {
+    if (this->pLogEventList->size() >= maxLogEvents) {
       return true;
     }
     return false;

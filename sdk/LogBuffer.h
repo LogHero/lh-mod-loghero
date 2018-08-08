@@ -2,6 +2,7 @@
 #define LOGBUFFER_H
 
 #include "LogEvent.h"
+#include "LogHeroSettings.h"
 #include "LockingPolicyLockGuard.h"
 #include "GlobalDefines.h"
 
@@ -16,7 +17,7 @@ namespace loghero {
     public:
 
       DISALLOW_COPY_AND_ASSIGN(LogBuffer);
-      LogBuffer(const typename ContainerPolicy::Settings &containerSettings);
+      LogBuffer(const LogHeroSettings &settings);
       virtual ~LogBuffer();
 
       void push(const LogEvent &logEvent);
@@ -26,8 +27,9 @@ namespace loghero {
   };
 
   template <class ContainerPolicy, class TimerPolicy, class LockingPolicy>
-  LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::LogBuffer(const typename ContainerPolicy::Settings &containerSettings) :
-    ContainerPolicy(containerSettings) {
+  LogBuffer<ContainerPolicy, TimerPolicy, LockingPolicy>::LogBuffer(const LogHeroSettings &settings) :
+    ContainerPolicy(settings),
+    TimerPolicy(settings) {
     TimerPolicy::reset();
   }
 

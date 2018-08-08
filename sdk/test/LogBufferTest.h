@@ -3,6 +3,7 @@
 
 #include "LogContainerPolicyInMemory.h"
 #include "TimerPolicyMock.h"
+#include "LogHeroSettings.h"
 #include "gtest/gtest.h"
 
 
@@ -13,7 +14,7 @@ namespace testing {
     public:
       LogBufferTest();
 
-      LogContainerPolicyInMemory::Settings containerSettings;
+      LogHeroSettings settings;
 
       TimerPolicyMock timerMock;
   };

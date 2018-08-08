@@ -1,6 +1,7 @@
 #ifndef TIMERPOLICYTEST_H
 #define TIMERPOLICYTEST_H
 
+#include "LogHeroSettings.h"
 #include "gtest/gtest.h"
 
 namespace loghero {
@@ -10,6 +11,8 @@ namespace testing {
   {
     public:
       TimerPolicyTest();
+
+      LogHeroSettings settings;
   };
 
 }}

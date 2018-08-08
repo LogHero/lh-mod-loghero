@@ -17,7 +17,6 @@ namespace testing {
       static std::string buildExpectedPayload(const LogEvent::List &logEvents);
 
       LogHeroSettings settings;
-      LogContainerPolicyInMemory::Settings bufferSettings;
   };
 
 }

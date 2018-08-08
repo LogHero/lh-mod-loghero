@@ -1,6 +1,7 @@
 #ifndef TIMERPOLICYMOCK_H
 #define TIMERPOLICYMOCK_H
 
+#include "LogHeroSettings.h"
 #include "gmock/gmock.h"
 
 namespace loghero {
@@ -9,7 +10,7 @@ namespace testing {
   class TimerPolicyMock {
     public:
 
-      TimerPolicyMock():
+      TimerPolicyMock(const LogHeroSettings settings = LogHeroSettings("SOME_API_KEY")):
         elapsedTimeSeconds(0) {
       }
 

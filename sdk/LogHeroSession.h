@@ -17,7 +17,7 @@ namespace loghero {
   class LogHeroSession : public LogHeroSessionInterface {
     public:
       DISALLOW_COPY_AND_ASSIGN(LogHeroSession);
-      LogHeroSession(const LogHeroSettings &settings, const typename BufferT::Settings &bufferSettings);
+      LogHeroSession(const LogHeroSettings &settings);
       virtual ~LogHeroSession();
 
       // TODO: This method is not thread save
@@ -29,12 +29,9 @@ namespace loghero {
   };
 
   template <class BufferT, class HttpRequestT, class SerializerT>
-  LogHeroSession<BufferT, HttpRequestT, SerializerT>::LogHeroSession(
-    const LogHeroSettings &settings,
-    const typename BufferT::Settings &bufferSettings
-  ) :
+  LogHeroSession<BufferT, HttpRequestT, SerializerT>::LogHeroSession(const LogHeroSettings &settings) :
     settings(settings),
-    logBuffer(bufferSettings) {
+    logBuffer(settings) {
   }
 
   template <class BufferT, class HttpRequestT, class SerializerT>

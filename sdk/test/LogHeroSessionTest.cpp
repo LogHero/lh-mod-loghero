@@ -11,8 +11,8 @@ namespace loghero {
 namespace testing {
 
   LogHeroSessionTest::LogHeroSessionTest():
-    settings("SOME_API_KEY"),
-    bufferSettings(3) {
+    settings("SOME_API_KEY") {
+    settings.maxLogEventsInBuffer = 3;
   }
 
   TEST_F(LogHeroSessionTest, DeflateLogEventAndSendToAPI) {
@@ -32,7 +32,7 @@ namespace testing {
     EXPECT_CALL(httpRequestMock, setData(expectedPayload));
     EXPECT_CALL(httpRequestMock, execute());
     FakeHttpRequest::resetRequestMock(&httpRequestMock);
-    LogHeroSession<DefaultLogBuffer, FakeHttpRequest, LogEventSerializerJson> session(settings, bufferSettings);
+    LogHeroSession<DefaultLogBuffer, FakeHttpRequest, LogEventSerializerJson> session(settings);
     session.submitLogEvent(logEvent);
     session.submitLogEvent(logEvent);
     session.submitLogEvent(logEvent);

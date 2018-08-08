@@ -1,6 +1,8 @@
 #ifndef TIMERPOLICYCTIME_H
 #define TIMERPOLICYCTIME_H
 
+#include "LogHeroSettings.h"
+
 #include <ctime>
 
 namespace loghero {
@@ -8,8 +10,7 @@ namespace loghero {
   class TimerPolicyCTime {
     public:
 
-      // TODO Pass via settings:
-      TimerPolicyCTime(uint64_t timeoutInSeconds=500);
+      TimerPolicyCTime(const LogHeroSettings &settings);
       virtual ~TimerPolicyCTime();
 
       void reset();
@@ -25,8 +26,8 @@ namespace loghero {
 
   };
 
-  inline TimerPolicyCTime::TimerPolicyCTime(uint64_t timeoutInSeconds) :
-    timeoutInSeconds(timeoutInSeconds),
+  inline TimerPolicyCTime::TimerPolicyCTime(const LogHeroSettings &settings) :
+    timeoutInSeconds(settings.logBufferTimeoutSeconds),
     referenceTimestamp(TimerPolicyCTime::getCurrentTimestamp()) {
   }
 

@@ -22,7 +22,7 @@ namespace loghero {
       loghero::LogHeroSettings settings(apiKey);
       this->resetSessionInternally(
         apiKey,
-        std::unique_ptr<LogHeroSessionInterface>(new LogHeroDefaultSession(settings, DefaultLogBuffer::Settings()))
+        std::unique_ptr<LogHeroSessionInterface>(new LogHeroDefaultSession(settings))
       );
       it = this->apiKeySessions.find(apiKey);
     }
