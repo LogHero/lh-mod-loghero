@@ -2,6 +2,8 @@
 #include "LogBuffer.h"
 #include "LibTestSamples.h"
 
+#include <boost/asio.hpp>
+
 
 namespace loghero {
 namespace testing {
@@ -54,6 +56,31 @@ namespace testing {
     ASSERT_FALSE(logBuffer.needsDumping());
     timerMock.setTimeElapsedSeconds(60);
     ASSERT_TRUE(logBuffer.needsDumping());
+  }
+
+  TEST_F(LogBufferTest, IsThreadSafe) {
+    unsigned int numberOfPushesPerTask = 20;
+    unsigned int numberOfThreads = 20;
+    unsigned int numberOfTasks = 2000;
+    std::size_t totalLogEventsExpected = std::size_t(numberOfTasks * numberOfPushesPerTask);
+    std::size_t totalLogEventsDumped = 0;
+    std::size_t *pTotalLogEventsDumped = &totalLogEventsDumped;
+    EXPECT_CALL(this->timerMock, mockedReset()).Times(numberOfTasks + 1);
+    LogBuffer<LogContainerPolicyInMemory, TimerPolicyMock> logBuffer(this->settings);
+    LogBuffer<LogContainerPolicyInMemory, TimerPolicyMock> *pLogBuffer = &logBuffer;
+    auto task = [=]() {
+      for (unsigned int i=0; i<numberOfPushesPerTask; ++i) {
+        pLogBuffer->push(LogEvent(createCLogEventSample()));
+      }
+      std::unique_ptr<LogEvent::List> pDumpedEvents = pLogBuffer->dump();
+      *pTotalLogEventsDumped += pDumpedEvents->size();
+    };
+    boost::asio::thread_pool threadPool(numberOfThreads);
+    for (unsigned int i=0; i<numberOfTasks; ++i) {
+      boost::asio::post(threadPool, task);
+    }
+    threadPool.join();
+    ASSERT_EQ(totalLogEventsDumped, totalLogEventsExpected);
   }
 
 }}
