@@ -30,6 +30,7 @@ add_executable(
     TimerPolicyMock.cpp
     TimerPolicyTest.h
     TimerPolicyTest.cpp
+    SubmitPolicyMock.h
 )
 
 target_link_libraries(

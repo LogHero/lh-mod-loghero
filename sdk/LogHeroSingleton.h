@@ -17,9 +17,11 @@ namespace loghero {
   class LogHero : public LockingPolicyLockGuard {
     public:
 
-      LogHeroSessionInterface* session(const std::string &apiKey);
+      void submitLogEvent(const std::string &apiKey, const LogEvent &logEvent);
 
       void resetSession(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession);
+
+      std::size_t getNumberOfSessions() const;
 
       void clearSessions();
 
@@ -30,6 +32,8 @@ namespace loghero {
       ~LogHero();
 
       typedef std::map<std::string, std::unique_ptr<LogHeroSessionInterface> > SessionMapT;
+
+      LogHeroSessionInterface* session(const std::string &apiKey);
 
       void resetSessionInternally(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession);
 

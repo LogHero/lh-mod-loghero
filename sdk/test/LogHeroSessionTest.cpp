@@ -32,7 +32,7 @@ namespace testing {
     EXPECT_CALL(httpRequestMock, setData(expectedPayload));
     EXPECT_CALL(httpRequestMock, execute());
     FakeHttpRequest::resetRequestMock(&httpRequestMock);
-    LogHeroSession<DefaultLogBuffer, FakeHttpRequest, LogEventSerializerJson> session(settings);
+    LogHeroSession< SubmitPolicySync<DefaultLogBuffer, FakeHttpRequest, LogEventSerializerJson> > session(settings);
     session.submitLogEvent(logEvent);
     session.submitLogEvent(logEvent);
     session.submitLogEvent(logEvent);

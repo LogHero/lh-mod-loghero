@@ -11,7 +11,6 @@
 
 namespace loghero {
 
-  // TODO Unit test to check thread safety
   template <class ContainerPolicy, class TimerPolicy, class LockingPolicy = LockingPolicyLockGuard>
   class LogBuffer : protected LockingPolicy, TimerPolicy, public ContainerPolicy {
     public:

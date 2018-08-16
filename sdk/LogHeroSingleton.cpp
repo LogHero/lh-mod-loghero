@@ -15,8 +15,30 @@ namespace loghero {
   }
 
   template <class LockingPolicy>
-  LogHeroSessionInterface* LogHero<LockingPolicy>::session(const std::string &apiKey) {
+  void LogHero<LockingPolicy>::submitLogEvent(const std::string &apiKey, const LogEvent &logEvent) {
     typename LockingPolicy::Lock lock(this->mutex);
+    this->session(apiKey)->submitLogEvent(logEvent);
+  }
+
+  template <class LockingPolicy>
+  void LogHero<LockingPolicy>::resetSession(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession) {
+    typename LockingPolicy::Lock lock(this->mutex);
+    this->resetSessionInternally(apiKey, std::move(pSession));
+  }
+
+  template <class LockingPolicy>
+  std::size_t LogHero<LockingPolicy>::getNumberOfSessions() const {
+    return this->apiKeySessions.size();
+  }
+
+  template <class LockingPolicy>
+  void LogHero<LockingPolicy>::clearSessions() {
+    typename LockingPolicy::Lock lock(this->mutex);
+    this->apiKeySessions.clear();
+  }
+
+  template <class LockingPolicy>
+  LogHeroSessionInterface* LogHero<LockingPolicy>::session(const std::string &apiKey) {
     SessionMapT::iterator it = this->apiKeySessions.find(apiKey);
     if (it == this->apiKeySessions.end()) {
       loghero::LogHeroSettings settings(apiKey);
@@ -28,18 +50,6 @@ namespace loghero {
     }
     assert(it != this->apiKeySessions.end());
     return it->second.get();
-  }
-
-  template <class LockingPolicy>
-  void LogHero<LockingPolicy>::resetSession(const std::string &apiKey, std::unique_ptr<LogHeroSessionInterface> pSession) {
-    typename LockingPolicy::Lock lock(this->mutex);
-    this->resetSessionInternally(apiKey, std::move(pSession));
-  }
-
-  template <class LockingPolicy>
-  void LogHero<LockingPolicy>::clearSessions() {
-    typename LockingPolicy::Lock lock(this->mutex);
-    this->apiKeySessions.clear();
   }
 
   template <class LockingPolicy>
