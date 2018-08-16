@@ -2,6 +2,9 @@
 #include "LogHeroSingleton.h"
 #include "LogHeroSession.h"
 
+#include <boost/asio.hpp>
+#include <experimental/random>
+
 
 namespace loghero {
 namespace testing {
@@ -33,6 +36,32 @@ namespace testing {
     LogHeroSessionInterface *pAccessedCustomSession = LogHeroSingleton::Instance().session("KEY_1");
     ASSERT_NE(pDefaultSession, pAccessedCustomSession);
     ASSERT_EQ(pCustomSession, pAccessedCustomSession);
+  }
+
+  TEST_F(LogHeroSingletonTest, IsThreadSafe) {
+    unsigned int numberOfThreads = 20;
+    unsigned int numberOfTasks = 2000;
+    std::vector<std::string> apiKeys(3);
+    std::generate(apiKeys.begin(), apiKeys.end(), [n = 0] () mutable {
+      std::stringstream strs;
+      strs << "KEY_" << ++n;
+      return strs.str();
+    });
+    auto task = [=]() {
+      std::size_t keyIdx = std::experimental::randint(std::size_t(0), apiKeys.size() - 1);
+      const std::string &apiKey = apiKeys[keyIdx];
+      LogHeroSingleton::Instance().session(apiKey);
+      LogHeroSingleton::Instance().resetSession(
+            apiKey,
+            std::unique_ptr<LogHeroSessionInterface>(new LogHeroDefaultSession(this->settings))
+          );
+      LogHeroSingleton::Instance().clearSessions();
+    };
+    boost::asio::thread_pool threadPool(numberOfThreads);
+    for (unsigned int i=0; i<numberOfTasks; ++i) {
+      boost::asio::post(threadPool, task);
+    }
+    threadPool.join();
   }
 
 }
