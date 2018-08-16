@@ -27,7 +27,6 @@ namespace testing {
 
   inline SubmitPolicyMock::SubmitPolicyMock(const LogHeroSettings &):
     numberOfDumpedLogEvents(0) {
-
   }
 
   inline void SubmitPolicyMock::dumpAndSubmit(BufferT *pLogBuffer) {
