@@ -17,7 +17,6 @@ namespace loghero {
       virtual ~SubmitPolicyAsync(){}
 
     protected:
-
       typedef BufferT_ BufferT;
 
       auto dumpAndSubmit(BufferT *pLogBuffer);

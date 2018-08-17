@@ -11,16 +11,15 @@ namespace loghero {
 
   template <class BufferT_, class HttpRequestT, class SerializerT>
   class SubmitPolicySync {
-    public:      
-      typedef BufferT_ BufferT;
-
+    public:
       DISALLOW_COPY_AND_ASSIGN(SubmitPolicySync);
       SubmitPolicySync(const LogHeroSettings &settings);
       virtual ~SubmitPolicySync(){}
 
-      static void dumpAndSubmit(BufferT *pLogBuffer, const LogHeroSettings &settings);
+      static void dumpAndSubmit(BufferT_ *pLogBuffer, const LogHeroSettings &settings);
 
     protected:
+      typedef BufferT_ BufferT;
 
       void dumpAndSubmit(BufferT *pLogBuffer);
 
