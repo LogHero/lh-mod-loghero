@@ -16,8 +16,9 @@ namespace loghero {
       SubmitPolicySync(const LogHeroSettings &settings);
       virtual ~SubmitPolicySync(){}
 
-    protected:
+      static void dumpAndSubmit(BufferT_ *pLogBuffer, const LogHeroSettings &settings);
 
+    protected:
       typedef BufferT_ BufferT;
 
       void dumpAndSubmit(BufferT *pLogBuffer);
@@ -32,7 +33,15 @@ namespace loghero {
 
   template <class BufferT_, class HttpRequestT, class SerializerT>
   void SubmitPolicySync<BufferT_, HttpRequestT, SerializerT>::dumpAndSubmit(BufferT *pLogBuffer) {
-    loghero::APIAccess<HttpRequestT, SerializerT> apiAccess(this->settings);
+    SubmitPolicySync<BufferT_, HttpRequestT, SerializerT>::dumpAndSubmit(pLogBuffer, this->settings);
+  }
+
+  template <class BufferT_, class HttpRequestT, class SerializerT>
+  void SubmitPolicySync<BufferT_, HttpRequestT, SerializerT>::dumpAndSubmit(
+      BufferT *pLogBuffer,
+      const LogHeroSettings &settings
+  ) {
+    loghero::APIAccess<HttpRequestT, SerializerT> apiAccess(settings);
     std::unique_ptr<LogEvent::List> pLogEventsToSend = pLogBuffer->dump();
     apiAccess.submitLogEvents(*pLogEventsToSend);
   }

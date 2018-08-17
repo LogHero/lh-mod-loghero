@@ -46,6 +46,7 @@ add_library(loghero_sdk STATIC
     LockingPolicyLockGuard.h
     TimerPolicyCTime.h
     SubmitPolicySync.h
+    SubmitPolicyAsync.h
 )
 
 add_library(loghero SHARED

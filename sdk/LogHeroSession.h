@@ -6,7 +6,7 @@
 #include "LogBuffer.h"
 #include "LogContainerPolicyInMemory.h"
 #include "TimerPolicyCTime.h"
-#include "SubmitPolicySync.h"
+#include "SubmitPolicyAsync.h"
 #include "HttpRequestCurl.h"
 #include "LogEventSerializerJson.h"
 
@@ -47,8 +47,9 @@ namespace loghero {
 
   typedef LogBuffer<LogContainerPolicyInMemory, TimerPolicyCTime> DefaultLogBuffer;
   typedef LogHeroSession<
-    SubmitPolicySync<DefaultLogBuffer, HttpRequestCurl, LogEventSerializerJson>
+    SubmitPolicyAsync<DefaultLogBuffer, HttpRequestCurl, LogEventSerializerJson>
   > LogHeroDefaultSession;
+
 }
 
 #endif // LOGHEROSESSION_H
