@@ -8,8 +8,7 @@
 namespace loghero {
 namespace testing {
 
-  class LogHeroSingletonTest : public ::testing::Test
-  {
+  class LogHeroSingletonTest : public ::testing::Test {
     public:
       LogHeroSingletonTest();
       virtual ~LogHeroSingletonTest();

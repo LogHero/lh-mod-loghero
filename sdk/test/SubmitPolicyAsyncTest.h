@@ -9,8 +9,7 @@
 namespace loghero {
 namespace testing {
 
-  class SubmitPolicyAsyncTest : public ::testing::Test
-  {
+  class SubmitPolicyAsyncTest : public ::testing::Test {
     public:
       SubmitPolicyAsyncTest();
 
