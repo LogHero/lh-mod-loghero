@@ -37,7 +37,6 @@ namespace testing {
     return numberOfDumpedLogEvents;
   }
 
-
 }}
 
 #endif // SUBMITPOLICYMOCK_H
