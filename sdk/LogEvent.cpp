@@ -7,6 +7,7 @@
 #include <sstream>
 #include <ctime>
 #include <cassert>
+#include <vector>
 
 
 namespace loghero {

@@ -4,7 +4,7 @@
 #include "LibLogHero.h"
 
 #include <string>
-#include <vector>
+#include <list>
 
 #include "GlobalDefines.h"
 
@@ -12,7 +12,7 @@ namespace loghero {
   class LogEvent {
     public:
 
-      typedef std::vector<LogEvent> List;
+      typedef std::list<LogEvent> List;
 
       LogEvent(const ::LogEvent &cLogEvent);
 
