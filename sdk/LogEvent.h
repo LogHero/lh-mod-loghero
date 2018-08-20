@@ -4,7 +4,7 @@
 #include "LibLogHero.h"
 
 #include <string>
-#include <vector>
+#include <list>
 
 #include "GlobalDefines.h"
 
@@ -12,7 +12,7 @@ namespace loghero {
   class LogEvent {
     public:
 
-      typedef std::vector<LogEvent> List;
+      typedef std::list<LogEvent> List;
 
       LogEvent(const ::LogEvent &cLogEvent);
 
@@ -26,6 +26,10 @@ namespace loghero {
 
       const inline std::string& getIpHash() const {
         return this->ipHash;
+      }
+
+      const inline std::string& getIpGroupHashes() const {
+        return this->ipGroupHashes;
       }
 
       const inline std::string& getUserAgent() const {
@@ -70,6 +74,8 @@ namespace loghero {
 
       static std::string createCidFromIpAndUserAgent(const std::string &ipAddress, const std::string &userAgent);
 
+      static std::string createIpGroupHashes(const std::string &ipAddress);
+
       static std::string md5Digest(const std::string &input);
 
       static std::string setStringValue(const char *cValue);
@@ -85,6 +91,7 @@ namespace loghero {
       const time_t pageLoadTimeMilliSec;
       const std::string cid;
       const std::string ipHash;
+      const std::string ipGroupHashes;
       const int statusCode;
 
   };

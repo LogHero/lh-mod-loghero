@@ -11,6 +11,7 @@ namespace loghero {
   pStreamWriter(std::move(LogEventSerializerJson::createStreamWriter())) {
     this->pColumnsValue->append("cid");
     this->pColumnsValue->append("ip");
+    this->pColumnsValue->append("ipGroups");
     this->pColumnsValue->append("hostname");
     this->pColumnsValue->append("landingPage");
     this->pColumnsValue->append("method");
@@ -41,6 +42,7 @@ namespace loghero {
     Json::Value row;
     row.append(logEvent.getCid());
     row.append(logEvent.getIpHash());
+    row.append(logEvent.getIpGroupHashes());
     row.append(logEvent.getHostname());
     row.append(logEvent.getLandingPagePath());
     row.append(logEvent.getMethod());

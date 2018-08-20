@@ -1,6 +1,7 @@
 #include "LogEventTest.h"
 #include "LibTestSamples.h"
 
+
 namespace loghero {
 namespace testing {
 
@@ -35,6 +36,14 @@ namespace testing {
     EXPECT_EQ("03de6422045e4ed3ac822c673ace32d1", logEvent.getIpHash());
   }
 
+  TEST_F(LogEventTest, GeneratMd5HashOfIpGroups) {
+    const LogEvent logEvent(this->cLogEvent);
+    EXPECT_EQ(
+      "202cb962ac59075b964b07152d234b70.6c8349cc7260ae62e3b1396831a8398f.735b90b4568125ed6c3f678819b6e058.7647966b7343c29048673252e490f736",
+      logEvent.getIpGroupHashes()
+    );
+  }
+
   TEST_F(LogEventTest, HandleNullCString) {
     this->cLogEvent.referer = NULL;
     this->cLogEvent.userAgent = NULL;
@@ -50,6 +59,7 @@ namespace testing {
     EXPECT_EQ("", logEvent.getHostname());
     EXPECT_EQ("", logEvent.getMethod());
     EXPECT_EQ("d41d8cd98f00b204e9800998ecf8427e", logEvent.getIpHash());
+    EXPECT_EQ("", logEvent.getIpGroupHashes());
     EXPECT_EQ("d41d8cd98f00b204e9800998ecf8427e", logEvent.getCid());
   }
 
