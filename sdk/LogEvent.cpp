@@ -1,5 +1,6 @@
 #include "LogEvent.h"
 
+#include <boost/algorithm/string.hpp>
 #include <openssl/md5.h>
 
 #include <iomanip>
@@ -22,15 +23,27 @@ namespace loghero {
     pageLoadTimeMilliSec(cLogEvent.pageLoadTimeMilliSec),
     cid(LogEvent::md5Digest(LogEvent::setStringValue(cLogEvent.ipAddress) + LogEvent::setStringValue(cLogEvent.userAgent))),
     ipHash(LogEvent::md5Digest(LogEvent::setStringValue(cLogEvent.ipAddress))),
+    ipGroupHashes(LogEvent::createIpGroupHashes(LogEvent::setStringValue(cLogEvent.ipAddress))),
     statusCode(cLogEvent.statusCode) {
   }
 
-  std::string LogEvent::convertUnixTimestampToString(time_t timestamp)
-  {
+  std::string LogEvent::convertUnixTimestampToString(time_t timestamp) {
     char mbstr[100];
     std::size_t writtenBytes = std::strftime(mbstr, 100, "%FT%T%z", std::localtime(&timestamp));
     assert(writtenBytes > 0);
     return std::string(mbstr);
+  }
+
+  std::string LogEvent::createIpGroupHashes(const std::string &ipAddress) {
+    if(ipAddress.empty()) {
+      return "";
+    }
+    std::vector<std::string> ipGroups;
+    boost::split(ipGroups, ipAddress, boost::is_any_of("."));
+    for (unsigned int i=0; i<ipGroups.size(); ++i) {
+      ipGroups[i] = LogEvent::md5Digest(ipGroups[i]);
+    }
+    return boost::algorithm::join(ipGroups, ".");
   }
 
   std::string LogEvent::md5Digest(const std::string &input) {

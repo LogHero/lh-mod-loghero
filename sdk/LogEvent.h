@@ -28,6 +28,10 @@ namespace loghero {
         return this->ipHash;
       }
 
+      const inline std::string& getIpGroupHashes() const {
+        return this->ipGroupHashes;
+      }
+
       const inline std::string& getUserAgent() const {
         return this->userAgent;
       }
@@ -70,6 +74,8 @@ namespace loghero {
 
       static std::string createCidFromIpAndUserAgent(const std::string &ipAddress, const std::string &userAgent);
 
+      static std::string createIpGroupHashes(const std::string &ipAddress);
+
       static std::string md5Digest(const std::string &input);
 
       static std::string setStringValue(const char *cValue);
@@ -85,6 +91,7 @@ namespace loghero {
       const time_t pageLoadTimeMilliSec;
       const std::string cid;
       const std::string ipHash;
+      const std::string ipGroupHashes;
       const int statusCode;
 
   };
