@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 2.8)
 project (lh-mod-loghero)
 
 set(LH_MOD_CLIENT_ID "\"Apache Module loghero/httpd@0.0.1\"")
