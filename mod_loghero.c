@@ -30,6 +30,7 @@ typedef struct {
 static lh_mod_config global_config;
 
 const char *loghero_set_api_key(cmd_parms *cmd, void *cfg, const char *arg);
+const char *loghero_set_enable_logging(cmd_parms *cmd, void *cfg, const char *logLevel, const char *logDirectory);
 static void loghero_register_hooks(apr_pool_t *pool);
 
 static const command_rec loghero_directives[] = {
@@ -38,8 +39,17 @@ static const command_rec loghero_directives[] = {
     loghero_set_api_key,
     NULL,
     RSRC_CONF,
-    "LogHero API key (For more information visit log-hero.com"
+    "LogHero API key (For more information visit log-hero.com)"
   ),
+#ifdef LH_ENABLE_LOGGING
+  AP_INIT_TAKE2(
+    "logHeroEnableLogging",
+    loghero_set_enable_logging,
+    NULL,
+    RSRC_CONF,
+    "Enable logging for debugging. Set log output directory and log level here."
+  ),
+#endif // LH_ENABLE_LOGGING
   { NULL }
 };
 
@@ -58,6 +68,16 @@ const char *loghero_set_api_key(cmd_parms *cmd, void *cfg, const char *arg) {
   return NULL;
 }
 
+#ifdef LH_ENABLE_LOGGING
+const char *loghero_set_enable_logging(cmd_parms *cmd, void *cfg, const char *logLevel, const char *logDirectory) {
+  if(logLevel && logDirectory) {
+    printf("\n ** LogHero module logging enabled (log level: %s, log directory: %s) **\n\n", logLevel, logDirectory);
+    loghero_enableLogging(logDirectory, logLevel);
+  }
+  return NULL;
+}
+#endif // LH_ENABLE_LOGGING
+
 static int loghero_handler(request_rec *r) {
   struct LogEvent logEvent;
   // Use apr_pescape_echo or ap_escape_logitem
@@ -71,7 +91,7 @@ static int loghero_handler(request_rec *r) {
   logEvent.statusCode = r->status;
   logEvent.method = r->method;
   logEvent.pageLoadTimeMilliSec = apr_time_msec(apr_time_now() - r->request_time);
-  submitLogEvent(global_config.api_key, &logEvent);
+  loghero_submitLogEvent(global_config.api_key, &logEvent);
   return DECLINED;
 }
 

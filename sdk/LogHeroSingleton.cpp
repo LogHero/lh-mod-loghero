@@ -9,7 +9,6 @@ namespace loghero {
 
   template <class LockingPolicy>
   LogHero<LockingPolicy>::LogHero() {
-    Logging<LoggingPolicyBoost>::init();
   }
 
   template <class LockingPolicy>
@@ -19,7 +18,7 @@ namespace loghero {
   template <class LockingPolicy>
   void LogHero<LockingPolicy>::submitLogEvent(const std::string &apiKey, const LogEvent &logEvent) {
     typename LockingPolicy::Lock lock(this->mutex);
-    Logging<LoggingPolicyBoost>::debug("Received new log event: " + logEvent.getLandingPagePath());
+    Log::debug("Processing log event URL " + logEvent.getLandingPagePath());
     this->session(apiKey)->submitLogEvent(logEvent);
   }
 
@@ -39,6 +38,13 @@ namespace loghero {
     typename LockingPolicy::Lock lock(this->mutex);
     this->apiKeySessions.clear();
   }
+
+#ifdef LH_ENABLE_LOGGING
+  template <class LockingPolicy>
+  void LogHero<LockingPolicy>::enableLogging(const std::string &logDirectory, const std::string &logLevel) {
+    Log::init(logDirectory, logLevel);
+  }
+#endif // LH_ENABLE_LOGGING
 
   template <class LockingPolicy>
   LogHeroSessionInterface* LogHero<LockingPolicy>::session(const std::string &apiKey) {
