@@ -4,7 +4,7 @@ add_definitions(-DLH_SDK_CLIENT_ID=${LH_SDK_CLIENT_ID})
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 find_package(JsonCpp REQUIRED)
-find_package(Boost COMPONENTS system iostreams REQUIRED)
+find_package(Boost COMPONENTS log system iostreams REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(CURL REQUIRED)
@@ -47,6 +47,9 @@ add_library(loghero_sdk STATIC
     TimerPolicyCTime.h
     SubmitPolicySync.h
     SubmitPolicyAsync.h
+    Logging.h
+    LoggingPolicyBoost.h
+    LoggingPolicyBoost.cpp
 )
 
 add_library(loghero SHARED

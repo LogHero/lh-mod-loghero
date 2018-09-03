@@ -1,5 +1,6 @@
 #include "LogHeroSingleton.h"
 #include "LogHeroSession.h"
+#include "Logging.h"
 
 #include <cassert>
 
@@ -8,6 +9,7 @@ namespace loghero {
 
   template <class LockingPolicy>
   LogHero<LockingPolicy>::LogHero() {
+    Logging<LoggingPolicyBoost>::init();
   }
 
   template <class LockingPolicy>
@@ -17,6 +19,7 @@ namespace loghero {
   template <class LockingPolicy>
   void LogHero<LockingPolicy>::submitLogEvent(const std::string &apiKey, const LogEvent &logEvent) {
     typename LockingPolicy::Lock lock(this->mutex);
+    Logging<LoggingPolicyBoost>::debug("Received new log event: " + logEvent.getLandingPagePath());
     this->session(apiKey)->submitLogEvent(logEvent);
   }
 
