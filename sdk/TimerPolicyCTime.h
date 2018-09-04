@@ -54,7 +54,7 @@ namespace loghero {
     else {
       std::stringstream strs;
       uint64_t secondsLeft = this->timeoutInSeconds - secondsElapsed;
-      strs << secondsLeft << " seconds left until next timeout" << std::endl;
+      strs << secondsLeft << " seconds left until next timeout";
       Log::debug(strs.str());
     }
 #endif // LH_ENABLE_LOGGING
