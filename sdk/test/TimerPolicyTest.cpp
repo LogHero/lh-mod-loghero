@@ -10,11 +10,11 @@ namespace testing {
         TimerPolicyCTime(settings) {
       }
 
-      std::clock_t getReferenceTimestamp() {
+      TimePointT getReferenceTimestamp() {
         return this->referenceTimestamp;
       }
 
-      void setReferenceTimestamp(std::clock_t timestamp) {
+      void setReferenceTimestamp(TimePointT timestamp) {
         this->referenceTimestamp = timestamp;
       }
   };
@@ -24,10 +24,10 @@ namespace testing {
   }
 
   TEST_F(TimerPolicyTest, ResetTimer) {
-    std::clock_t ts1 = std::clock();
+    TimerPolicyCTime::TimePointT ts1 = std::chrono::steady_clock::now();
     TimerPolicyForTesting policy(this->settings);
     ASSERT_LE(ts1, policy.getReferenceTimestamp());
-    std::clock_t ts2 = std::clock();
+    TimerPolicyCTime::TimePointT ts2 = std::chrono::steady_clock::now();
     ASSERT_GE(ts2, policy.getReferenceTimestamp());
     policy.reset();
     ASSERT_LE(ts2, policy.getReferenceTimestamp());
@@ -35,10 +35,10 @@ namespace testing {
 
   TEST_F(TimerPolicyTest, Timeout) {
     this->settings.logBufferTimeoutSeconds = 60;
-    std::clock_t now = std::clock();
+    TimerPolicyCTime::TimePointT now = std::chrono::steady_clock::now();
     TimerPolicyForTesting policy(this->settings);
     ASSERT_FALSE(policy.timeout());
-    policy.setReferenceTimestamp(now + 100 * CLOCKS_PER_SEC);
+    policy.setReferenceTimestamp(now + std::chrono::seconds(100));
     ASSERT_TRUE(policy.timeout());
   }
 

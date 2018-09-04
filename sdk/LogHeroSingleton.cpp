@@ -1,5 +1,6 @@
 #include "LogHeroSingleton.h"
 #include "LogHeroSession.h"
+#include "Logging.h"
 
 #include <cassert>
 
@@ -17,6 +18,7 @@ namespace loghero {
   template <class LockingPolicy>
   void LogHero<LockingPolicy>::submitLogEvent(const std::string &apiKey, const LogEvent &logEvent) {
     typename LockingPolicy::Lock lock(this->mutex);
+    Log::debug("Processing log event URL " + logEvent.getLandingPagePath());
     this->session(apiKey)->submitLogEvent(logEvent);
   }
 
@@ -36,6 +38,13 @@ namespace loghero {
     typename LockingPolicy::Lock lock(this->mutex);
     this->apiKeySessions.clear();
   }
+
+#ifdef LH_ENABLE_LOGGING
+  template <class LockingPolicy>
+  void LogHero<LockingPolicy>::enableLogging(const std::string &logDirectory, const std::string &logLevel) {
+    Log::init(logDirectory, logLevel);
+  }
+#endif // LH_ENABLE_LOGGING
 
   template <class LockingPolicy>
   LogHeroSessionInterface* LogHero<LockingPolicy>::session(const std::string &apiKey) {

@@ -3,8 +3,11 @@
 
 #include "LogEvent.h"
 #include "LogHeroSettings.h"
+#include "Logging.h"
 
 #include <memory>
+#include <sstream>
+
 
 namespace loghero {
 
@@ -35,13 +38,24 @@ namespace loghero {
   }
 
   inline bool LogContainerPolicyInMemory::logEventsNeedDumping() const {
+#ifdef LH_ENABLE_LOGGING
+    std::stringstream strs;
+    strs << "Log container size: " << this->pLogEventList->size() << "/" << maxLogEvents;
+    Log::debug(strs.str());
+#endif // LH_ENABLE_LOGGING
     if (this->pLogEventList->size() >= maxLogEvents) {
+      Log::debug("Container capacity reached, dump needed");
       return true;
     }
     return false;
   }
 
   inline std::unique_ptr<LogEvent::List> LogContainerPolicyInMemory::dumpLogEvents() {
+#ifdef LH_ENABLE_LOGGING
+    std::stringstream strs;
+    strs << "Dumping " << this->pLogEventList->size() << " log events";
+    Log::info(strs.str());
+#endif // LH_ENABLE_LOGGING
     std::unique_ptr<LogEvent::List> pLogEventListForDumping = std::move(this->pLogEventList);
     this->pLogEventList = std::unique_ptr<LogEvent::List>(new LogEvent::List());
     return pLogEventListForDumping;

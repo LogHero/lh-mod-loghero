@@ -17,7 +17,11 @@ extern "C" {
     int statusCode;
   };
 
-  void submitLogEvent(const char *apiKey, struct LogEvent *logEvent);
+  void loghero_submitLogEvent(const char *apiKey, struct LogEvent *logEvent);
+
+#ifdef LH_ENABLE_LOGGING
+  void loghero_enableLogging(const char *logDirectory, const char *logLevel);
+#endif // LH_ENABLE_LOGGING
 
 #ifdef __cplusplus
 }

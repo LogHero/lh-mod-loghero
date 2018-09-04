@@ -30,6 +30,7 @@ typedef struct {
 static lh_mod_config global_config;
 
 const char *loghero_set_api_key(cmd_parms *cmd, void *cfg, const char *arg);
+const char *loghero_set_enable_logging(cmd_parms *cmd, void *cfg, const char *logLevel, const char *logDirectory);
 static void loghero_register_hooks(apr_pool_t *pool);
 
 static const command_rec loghero_directives[] = {
@@ -38,7 +39,14 @@ static const command_rec loghero_directives[] = {
     loghero_set_api_key,
     NULL,
     RSRC_CONF,
-    "LogHero API key (For more information visit log-hero.com"
+    "LogHero API key (For more information visit log-hero.com)"
+  ),
+  AP_INIT_TAKE2(
+    "logHeroEnableLogging",
+    loghero_set_enable_logging,
+    NULL,
+    RSRC_CONF,
+    "Enable logging for debugging. Set log output directory and log level here."
   ),
   { NULL }
 };
@@ -58,6 +66,18 @@ const char *loghero_set_api_key(cmd_parms *cmd, void *cfg, const char *arg) {
   return NULL;
 }
 
+const char *loghero_set_enable_logging(cmd_parms *cmd, void *cfg, const char *logLevel, const char *logDirectory) {
+  if(logLevel && logDirectory) {
+#ifdef LH_ENABLE_LOGGING
+    printf("\n ** LogHero module logging enabled (log level: %s, log directory: %s) **\n\n", logLevel, logDirectory);
+    loghero_enableLogging(logDirectory, logLevel);
+#else // LH_ENABLE_LOGGING
+    printf("\n ** LogHero module logging ignored because it is compiled without logging support **\n\n");
+#endif // LH_ENABLE_LOGGING
+  }
+  return NULL;
+}
+
 static int loghero_handler(request_rec *r) {
   struct LogEvent logEvent;
   // Use apr_pescape_echo or ap_escape_logitem
@@ -71,7 +91,7 @@ static int loghero_handler(request_rec *r) {
   logEvent.statusCode = r->status;
   logEvent.method = r->method;
   logEvent.pageLoadTimeMilliSec = apr_time_msec(apr_time_now() - r->request_time);
-  submitLogEvent(global_config.api_key, &logEvent);
+  loghero_submitLogEvent(global_config.api_key, &logEvent);
   return DECLINED;
 }
 

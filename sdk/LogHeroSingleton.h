@@ -25,6 +25,10 @@ namespace loghero {
 
       void clearSessions();
 
+#ifdef LH_ENABLE_LOGGING
+      void enableLogging(const std::string &logDirectory, const std::string &logLevel);
+#endif // LH_ENABLE_LOGGING
+
     private:
       friend struct Loki::CreateUsingNew<LogHero>;
 
