@@ -41,7 +41,6 @@ static const command_rec loghero_directives[] = {
     RSRC_CONF,
     "LogHero API key (For more information visit log-hero.com)"
   ),
-#ifdef LH_ENABLE_LOGGING
   AP_INIT_TAKE2(
     "logHeroEnableLogging",
     loghero_set_enable_logging,
@@ -49,7 +48,6 @@ static const command_rec loghero_directives[] = {
     RSRC_CONF,
     "Enable logging for debugging. Set log output directory and log level here."
   ),
-#endif // LH_ENABLE_LOGGING
   { NULL }
 };
 
@@ -68,15 +66,17 @@ const char *loghero_set_api_key(cmd_parms *cmd, void *cfg, const char *arg) {
   return NULL;
 }
 
-#ifdef LH_ENABLE_LOGGING
 const char *loghero_set_enable_logging(cmd_parms *cmd, void *cfg, const char *logLevel, const char *logDirectory) {
   if(logLevel && logDirectory) {
+#ifdef LH_ENABLE_LOGGING
     printf("\n ** LogHero module logging enabled (log level: %s, log directory: %s) **\n\n", logLevel, logDirectory);
     loghero_enableLogging(logDirectory, logLevel);
+#else // LH_ENABLE_LOGGING
+    printf("\n ** LogHero module logging ignored because it is compiled without logging support **\n\n");
+#endif // LH_ENABLE_LOGGING
   }
   return NULL;
 }
-#endif // LH_ENABLE_LOGGING
 
 static int loghero_handler(request_rec *r) {
   struct LogEvent logEvent;
