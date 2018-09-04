@@ -13,7 +13,7 @@ endif(LH_ENABLE_LOGGING)
 
 
 find_package(JsonCpp REQUIRED)
-find_package(Boost COMPONENTS ${BOOST_LOG_COMPONENT} system iostreams REQUIRED)
+find_package(Boost COMPONENTS ${BOOST_LOG_COMPONENT} filesystem system iostreams REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(CURL REQUIRED)
