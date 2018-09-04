@@ -4,16 +4,16 @@ add_definitions(-DLH_SDK_CLIENT_ID=${LH_SDK_CLIENT_ID})
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 
-set(BOOST_LOG_COMPONENT "")
+set(BOOST_LOG_COMPONENTS "")
 set(LOG_SOURCE_FILES "")
 if(LH_ENABLE_LOGGING)
-  set(BOOST_LOG_COMPONENT log)
+  set(BOOST_LOG_COMPONENTS log log_setup filesystem thread)
   set(LOG_SOURCE_FILES LoggingPolicyBoost.h LoggingPolicyBoost.cpp)
 endif(LH_ENABLE_LOGGING)
 
 
 find_package(JsonCpp REQUIRED)
-find_package(Boost COMPONENTS ${BOOST_LOG_COMPONENT} filesystem system iostreams REQUIRED)
+find_package(Boost COMPONENTS ${BOOST_LOG_COMPONENTS} filesystem iostreams system REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(CURL REQUIRED)
