@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "LogHeroSingleton.h"
+#include "Logging.h"
 
 #include "LogEventSerializerJson.h"
 #include "APIAccess.h"
@@ -13,7 +14,7 @@
 void loghero_submitLogEvent(const char *apiKey, struct LogEvent *pLogEvent) {
   std::string apiKeyAsString(apiKey);
   if (apiKeyAsString.empty()) {
-    std::cout << "API KEY IS NOT SET!! SUBMIT CANCELLED!!" << apiKey << std::endl;
+    loghero::Log::warning("API key is not set! Submit cancelled!");
     return;
   }
   const loghero::LogEvent logEvent(*pLogEvent);

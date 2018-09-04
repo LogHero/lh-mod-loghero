@@ -47,10 +47,10 @@ namespace loghero {
     namespace keywords = boost::log::keywords;
     namespace sinks = boost::log::sinks;
     boost::log::add_file_log(
-      keywords::file_name = logDirectory + "/mod_loghero_%Y-%m-%d_%H-%M-%S.%N.log",
+      keywords::file_name = logDirectory + "/mod_loghero_%Y-%m-%d.%N.log",
       keywords::rotation_size = 10 * 1024 * 1024,
       keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
-      keywords::format = "[%TimeStamp%][%ProcessID%]: %Message%",
+      keywords::format = "[%TimeStamp%][%ThreadID%]: %Message%",
       keywords::open_mode = std::ios_base::app,
       keywords::auto_flush = true
     );
